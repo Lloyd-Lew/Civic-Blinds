@@ -1,0 +1,1669 @@
+{
+    "name": "Calculate invoice",
+    "flow": [
+        {
+            "id": 1,
+            "module": "monday:watchEventsInstant",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 321261
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 900
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "Calculate quote"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:monday",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "monday:GetItem",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 183282
+            },
+            "mapper": {
+                "id": "{{1.event.pulseId}}",
+                "boardId": "3465841015",
+                "showSubitems": true,
+                "showParentItem": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 900
+                },
+                "restore": {
+                    "expect": {
+                        "boardId": {
+                            "label": "Invoices  ::  private"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "monday"
+                            },
+                            "label": "My Monday v2 connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:monday",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showParentItem",
+                        "type": "boolean",
+                        "label": "Show Parent Item",
+                        "required": true
+                    },
+                    {
+                        "name": "showSubitems",
+                        "type": "boolean",
+                        "label": "Show Subitems",
+                        "required": true
+                    },
+                    {
+                        "name": "boardId",
+                        "type": "select",
+                        "label": "Board ID (NOT MANDATORY)"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name"
+                    },
+                    {
+                        "name": "created_at",
+                        "type": "date",
+                        "label": "Created at"
+                    },
+                    {
+                        "name": "updated_at",
+                        "type": "date",
+                        "label": "Updated at"
+                    },
+                    {
+                        "name": "state",
+                        "type": "text",
+                        "label": "State"
+                    },
+                    {
+                        "name": "board",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Board"
+                    },
+                    {
+                        "name": "creator_id",
+                        "type": "uinteger",
+                        "label": "Creator ID"
+                    },
+                    {
+                        "name": "group",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Title"
+                            },
+                            {
+                                "name": "deleted",
+                                "type": "boolean",
+                                "label": "Deleted"
+                            },
+                            {
+                                "name": "archived",
+                                "type": "boolean",
+                                "label": "Archived"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Group"
+                    },
+                    {
+                        "name": "column_values",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Title"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            },
+                            {
+                                "name": "additional_info",
+                                "type": "text",
+                                "label": "Additional Info"
+                            },
+                            {
+                                "name": "text",
+                                "type": "text",
+                                "label": "Text"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Column Values"
+                    },
+                    {
+                        "name": "mappable_column_values",
+                        "spec": [
+                            {
+                                "name": "person",
+                                "spec": [
+                                    {
+                                        "name": "personsAndTeams",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "kind",
+                                                "type": "text",
+                                                "label": "Kind"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Persons and Teams"
+                                    },
+                                    {
+                                        "name": "changed_at",
+                                        "type": "date",
+                                        "label": "Changed at"
+                                    },
+                                    {
+                                        "name": "additonal_info",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Label"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Aditional info"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Salesperson"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Mappable column values"
+                    },
+                    {
+                        "name": "assets",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "public_url",
+                                "type": "url",
+                                "label": "Public URL"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            },
+                            {
+                                "name": "file_extension",
+                                "type": "text",
+                                "label": "File Extension"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Assets"
+                    },
+                    {
+                        "name": "parent_item",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "created_at",
+                                "type": "date",
+                                "label": "Created at"
+                            },
+                            {
+                                "name": "updated_at",
+                                "type": "date",
+                                "label": "Updated at"
+                            },
+                            {
+                                "name": "state",
+                                "type": "text",
+                                "label": "State"
+                            },
+                            {
+                                "name": "board",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Board"
+                            },
+                            {
+                                "name": "creator_id",
+                                "type": "uinteger",
+                                "label": "Creator ID"
+                            },
+                            {
+                                "name": "group",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Group"
+                            },
+                            {
+                                "name": "column_values",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "title",
+                                        "type": "text",
+                                        "label": "Title"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "additional_info",
+                                        "type": "text",
+                                        "label": "Additional Info"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "array",
+                                "label": "Column Values"
+                            },
+                            {
+                                "name": "mappable_column_values",
+                                "spec": [],
+                                "type": "collection",
+                                "label": "Mappable column values"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Parent Item"
+                    },
+                    {
+                        "name": "subitems",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "created_at",
+                                "type": "date",
+                                "label": "Created at"
+                            },
+                            {
+                                "name": "updated_at",
+                                "type": "date",
+                                "label": "Updated at"
+                            },
+                            {
+                                "name": "state",
+                                "type": "text",
+                                "label": "State"
+                            },
+                            {
+                                "name": "board",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Board"
+                            },
+                            {
+                                "name": "creator_id",
+                                "type": "uinteger",
+                                "label": "Creator ID"
+                            },
+                            {
+                                "name": "group",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Group"
+                            },
+                            {
+                                "name": "column_values",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "title",
+                                        "type": "text",
+                                        "label": "Title"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "additional_info",
+                                        "type": "text",
+                                        "label": "Additional Info"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "array",
+                                "label": "Column Values"
+                            },
+                            {
+                                "name": "mappable_column_values",
+                                "spec": [],
+                                "type": "collection",
+                                "label": "Mappable column values"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Subitems"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 17,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 900
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 3,
+                            "module": "builtin:BasicFeeder",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "array": "{{sort(2.subitems; \"name\")}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 750
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "array": {
+                                            "mode": "edit"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "mode": "edit",
+                                        "name": "array",
+                                        "spec": [],
+                                        "type": "array",
+                                        "label": "Array"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 4,
+                            "module": "util:SetVariables",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "scope": "roundtrip",
+                                "variables": [
+                                    {
+                                        "name": "Unit Price",
+                                        "value": ""
+                                    },
+                                    {
+                                        "name": "Quantity",
+                                        "value": ""
+                                    },
+                                    {
+                                        "name": "Amount",
+                                        "value": ""
+                                    }
+                                ]
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 750,
+                                    "name": "zeroing variables"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "scope": {
+                                            "label": "One cycle"
+                                        },
+                                        "variables": {
+                                            "items": [
+                                                null,
+                                                null,
+                                                null
+                                            ]
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "variables",
+                                        "spec": [
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Variable name",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "any",
+                                                "label": "Variable value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Variables"
+                                    },
+                                    {
+                                        "name": "scope",
+                                        "type": "select",
+                                        "label": "Variable lifetime",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "roundtrip",
+                                                "execution"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "Unit Price",
+                                        "type": "any",
+                                        "label": "Unit Price"
+                                    },
+                                    {
+                                        "name": "Quantity",
+                                        "type": "any",
+                                        "label": "Quantity"
+                                    },
+                                    {
+                                        "name": "Amount",
+                                        "type": "any",
+                                        "label": "Amount"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 6,
+                            "module": "util:SetVariables",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "scope": "roundtrip",
+                                "variables": [
+                                    {
+                                        "name": "Unit Price",
+                                        "value": "{{3.mappable_column_values.numbers}}"
+                                    },
+                                    {
+                                        "name": "Quantity",
+                                        "value": "{{3.mappable_column_values.numbers0}}"
+                                    },
+                                    {
+                                        "name": "Amount",
+                                        "value": "{{3.mappable_column_values.numbers9}}"
+                                    }
+                                ]
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 750
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "scope": {
+                                            "label": "One cycle"
+                                        },
+                                        "variables": {
+                                            "items": [
+                                                null,
+                                                null,
+                                                null
+                                            ]
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "variables",
+                                        "spec": [
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Variable name",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "any",
+                                                "label": "Variable value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Variables"
+                                    },
+                                    {
+                                        "name": "scope",
+                                        "type": "select",
+                                        "label": "Variable lifetime",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "roundtrip",
+                                                "execution"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "Unit Price",
+                                        "type": "any",
+                                        "label": "Unit Price"
+                                    },
+                                    {
+                                        "name": "Quantity",
+                                        "type": "any",
+                                        "label": "Quantity"
+                                    },
+                                    {
+                                        "name": "Amount",
+                                        "type": "any",
+                                        "label": "Amount"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 18,
+                            "module": "builtin:BasicRouter",
+                            "version": 1,
+                            "mapper": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": 1800,
+                                    "y": 750
+                                }
+                            },
+                            "routes": [
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 7,
+                                            "module": "builtin:BasicRouter",
+                                            "version": 1,
+                                            "mapper": null,
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2100,
+                                                    "y": 600
+                                                }
+                                            },
+                                            "routes": [
+                                                {
+                                                    "flow": [
+                                                        {
+                                                            "id": 8,
+                                                            "module": "util:SetVariables",
+                                                            "version": 1,
+                                                            "parameters": {},
+                                                            "filter": {
+                                                                "name": "Exist only amount",
+                                                                "conditions": [
+                                                                    [
+                                                                        {
+                                                                            "a": "{{6.Amount}}",
+                                                                            "o": "exist"
+                                                                        },
+                                                                        {
+                                                                            "a": "{{6.Quantity}}",
+                                                                            "o": "notexist"
+                                                                        },
+                                                                        {
+                                                                            "a": "{{6.`Unit Price`}}",
+                                                                            "o": "notexist"
+                                                                        }
+                                                                    ]
+                                                                ]
+                                                            },
+                                                            "mapper": {
+                                                                "scope": "roundtrip",
+                                                                "variables": [
+                                                                    {
+                                                                        "name": "Unit Price",
+                                                                        "value": "{{6.Amount}}"
+                                                                    },
+                                                                    {
+                                                                        "name": "Quantity",
+                                                                        "value": "1"
+                                                                    },
+                                                                    {
+                                                                        "name": "Amount",
+                                                                        "value": "{{6.Amount}}"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "metadata": {
+                                                                "designer": {
+                                                                    "x": 2400,
+                                                                    "y": 0
+                                                                },
+                                                                "restore": {
+                                                                    "expect": {
+                                                                        "scope": {
+                                                                            "label": "One cycle"
+                                                                        },
+                                                                        "variables": {
+                                                                            "items": [
+                                                                                null,
+                                                                                null,
+                                                                                null
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "expect": [
+                                                                    {
+                                                                        "name": "variables",
+                                                                        "spec": [
+                                                                            {
+                                                                                "name": "name",
+                                                                                "type": "text",
+                                                                                "label": "Variable name",
+                                                                                "required": true
+                                                                            },
+                                                                            {
+                                                                                "name": "value",
+                                                                                "type": "any",
+                                                                                "label": "Variable value"
+                                                                            }
+                                                                        ],
+                                                                        "type": "array",
+                                                                        "label": "Variables"
+                                                                    },
+                                                                    {
+                                                                        "name": "scope",
+                                                                        "type": "select",
+                                                                        "label": "Variable lifetime",
+                                                                        "required": true,
+                                                                        "validate": {
+                                                                            "enum": [
+                                                                                "roundtrip",
+                                                                                "execution"
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "interface": [
+                                                                    {
+                                                                        "name": "Unit Price",
+                                                                        "type": "any",
+                                                                        "label": "Unit Price"
+                                                                    },
+                                                                    {
+                                                                        "name": "Quantity",
+                                                                        "type": "any",
+                                                                        "label": "Quantity"
+                                                                    },
+                                                                    {
+                                                                        "name": "Amount",
+                                                                        "type": "any",
+                                                                        "label": "Amount"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "flow": [
+                                                        {
+                                                            "id": 10,
+                                                            "module": "util:SetVariables",
+                                                            "version": 1,
+                                                            "parameters": {},
+                                                            "filter": {
+                                                                "name": "amount does not  exist",
+                                                                "conditions": [
+                                                                    [
+                                                                        {
+                                                                            "a": "{{6.Amount}}",
+                                                                            "o": "notexist"
+                                                                        },
+                                                                        {
+                                                                            "a": "{{6.`Unit Price`}}",
+                                                                            "o": "exist"
+                                                                        },
+                                                                        {
+                                                                            "a": "{{6.Quantity}}",
+                                                                            "o": "exist"
+                                                                        }
+                                                                    ]
+                                                                ]
+                                                            },
+                                                            "mapper": {
+                                                                "scope": "roundtrip",
+                                                                "variables": [
+                                                                    {
+                                                                        "name": "Unit Price",
+                                                                        "value": "{{6.`Unit Price`}}"
+                                                                    },
+                                                                    {
+                                                                        "name": "Quantity",
+                                                                        "value": "{{6.Quantity}}"
+                                                                    },
+                                                                    {
+                                                                        "name": "Amount",
+                                                                        "value": "{{6.`Unit Price` * 6.Quantity}}"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "metadata": {
+                                                                "designer": {
+                                                                    "x": 2400,
+                                                                    "y": 300
+                                                                },
+                                                                "restore": {
+                                                                    "expect": {
+                                                                        "scope": {
+                                                                            "label": "One cycle"
+                                                                        },
+                                                                        "variables": {
+                                                                            "items": [
+                                                                                null,
+                                                                                null,
+                                                                                null
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "expect": [
+                                                                    {
+                                                                        "name": "variables",
+                                                                        "spec": [
+                                                                            {
+                                                                                "name": "name",
+                                                                                "type": "text",
+                                                                                "label": "Variable name",
+                                                                                "required": true
+                                                                            },
+                                                                            {
+                                                                                "name": "value",
+                                                                                "type": "any",
+                                                                                "label": "Variable value"
+                                                                            }
+                                                                        ],
+                                                                        "type": "array",
+                                                                        "label": "Variables"
+                                                                    },
+                                                                    {
+                                                                        "name": "scope",
+                                                                        "type": "select",
+                                                                        "label": "Variable lifetime",
+                                                                        "required": true,
+                                                                        "validate": {
+                                                                            "enum": [
+                                                                                "roundtrip",
+                                                                                "execution"
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "interface": [
+                                                                    {
+                                                                        "name": "Unit Price",
+                                                                        "type": "any",
+                                                                        "label": "Unit Price"
+                                                                    },
+                                                                    {
+                                                                        "name": "Quantity",
+                                                                        "type": "any",
+                                                                        "label": "Quantity"
+                                                                    },
+                                                                    {
+                                                                        "name": "Amount",
+                                                                        "type": "any",
+                                                                        "label": "Amount"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "flow": [
+                                                        {
+                                                            "id": 12,
+                                                            "module": "util:SetVariables",
+                                                            "version": 1,
+                                                            "parameters": {},
+                                                            "filter": {
+                                                                "name": "qty does not  exist",
+                                                                "conditions": [
+                                                                    [
+                                                                        {
+                                                                            "a": "{{6.Quantity}}",
+                                                                            "o": "notexist"
+                                                                        },
+                                                                        {
+                                                                            "a": "{{6.`Unit Price`}}",
+                                                                            "o": "exist"
+                                                                        },
+                                                                        {
+                                                                            "a": "{{6.Amount}}",
+                                                                            "o": "exist"
+                                                                        }
+                                                                    ]
+                                                                ]
+                                                            },
+                                                            "mapper": {
+                                                                "scope": "roundtrip",
+                                                                "variables": [
+                                                                    {
+                                                                        "name": "Unit Price",
+                                                                        "value": "{{6.`Unit Price`}}"
+                                                                    },
+                                                                    {
+                                                                        "name": "Quantity",
+                                                                        "value": "{{6.Amount / 6.`Unit Price`}}"
+                                                                    },
+                                                                    {
+                                                                        "name": "Amount",
+                                                                        "value": "{{6.Amount}}"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "metadata": {
+                                                                "designer": {
+                                                                    "x": 2400,
+                                                                    "y": 600
+                                                                },
+                                                                "restore": {
+                                                                    "expect": {
+                                                                        "scope": {
+                                                                            "label": "One cycle"
+                                                                        },
+                                                                        "variables": {
+                                                                            "items": [
+                                                                                null,
+                                                                                null,
+                                                                                null
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "expect": [
+                                                                    {
+                                                                        "name": "variables",
+                                                                        "spec": [
+                                                                            {
+                                                                                "name": "name",
+                                                                                "type": "text",
+                                                                                "label": "Variable name",
+                                                                                "required": true
+                                                                            },
+                                                                            {
+                                                                                "name": "value",
+                                                                                "type": "any",
+                                                                                "label": "Variable value"
+                                                                            }
+                                                                        ],
+                                                                        "type": "array",
+                                                                        "label": "Variables"
+                                                                    },
+                                                                    {
+                                                                        "name": "scope",
+                                                                        "type": "select",
+                                                                        "label": "Variable lifetime",
+                                                                        "required": true,
+                                                                        "validate": {
+                                                                            "enum": [
+                                                                                "roundtrip",
+                                                                                "execution"
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "interface": [
+                                                                    {
+                                                                        "name": "Unit Price",
+                                                                        "type": "any",
+                                                                        "label": "Unit Price"
+                                                                    },
+                                                                    {
+                                                                        "name": "Quantity",
+                                                                        "type": "any",
+                                                                        "label": "Quantity"
+                                                                    },
+                                                                    {
+                                                                        "name": "Amount",
+                                                                        "type": "any",
+                                                                        "label": "Amount"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "flow": [
+                                                        {
+                                                            "id": 13,
+                                                            "module": "util:SetVariables",
+                                                            "version": 1,
+                                                            "parameters": {},
+                                                            "filter": {
+                                                                "name": "Unit Price does not  exist",
+                                                                "conditions": [
+                                                                    [
+                                                                        {
+                                                                            "a": "{{6.`Unit Price`}}",
+                                                                            "o": "notexist"
+                                                                        },
+                                                                        {
+                                                                            "a": "{{6.Quantity}}",
+                                                                            "o": "exist"
+                                                                        },
+                                                                        {
+                                                                            "a": "{{6.Amount}}",
+                                                                            "o": "exist"
+                                                                        }
+                                                                    ]
+                                                                ]
+                                                            },
+                                                            "mapper": {
+                                                                "scope": "roundtrip",
+                                                                "variables": [
+                                                                    {
+                                                                        "name": "Unit Price",
+                                                                        "value": "{{6.Amount / 6.Quantity}}"
+                                                                    },
+                                                                    {
+                                                                        "name": "Quantity",
+                                                                        "value": "{{6.Quantity}}"
+                                                                    },
+                                                                    {
+                                                                        "name": "Amount",
+                                                                        "value": "{{6.Amount}}"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "metadata": {
+                                                                "designer": {
+                                                                    "x": 2400,
+                                                                    "y": 900
+                                                                },
+                                                                "restore": {
+                                                                    "expect": {
+                                                                        "scope": {
+                                                                            "label": "One cycle"
+                                                                        },
+                                                                        "variables": {
+                                                                            "items": [
+                                                                                null,
+                                                                                null,
+                                                                                null
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "expect": [
+                                                                    {
+                                                                        "name": "variables",
+                                                                        "spec": [
+                                                                            {
+                                                                                "name": "name",
+                                                                                "type": "text",
+                                                                                "label": "Variable name",
+                                                                                "required": true
+                                                                            },
+                                                                            {
+                                                                                "name": "value",
+                                                                                "type": "any",
+                                                                                "label": "Variable value"
+                                                                            }
+                                                                        ],
+                                                                        "type": "array",
+                                                                        "label": "Variables"
+                                                                    },
+                                                                    {
+                                                                        "name": "scope",
+                                                                        "type": "select",
+                                                                        "label": "Variable lifetime",
+                                                                        "required": true,
+                                                                        "validate": {
+                                                                            "enum": [
+                                                                                "roundtrip",
+                                                                                "execution"
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "interface": [
+                                                                    {
+                                                                        "name": "Unit Price",
+                                                                        "type": "any",
+                                                                        "label": "Unit Price"
+                                                                    },
+                                                                    {
+                                                                        "name": "Quantity",
+                                                                        "type": "any",
+                                                                        "label": "Quantity"
+                                                                    },
+                                                                    {
+                                                                        "name": "Amount",
+                                                                        "type": "any",
+                                                                        "label": "Amount"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "flow": [
+                                                        {
+                                                            "id": 19,
+                                                            "module": "util:SetVariables",
+                                                            "version": 1,
+                                                            "parameters": {},
+                                                            "filter": {
+                                                                "name": "",
+                                                                "conditions": [
+                                                                    [
+                                                                        {
+                                                                            "a": "{{6.`Unit Price`}}",
+                                                                            "b": "0",
+                                                                            "o": "text:equal"
+                                                                        },
+                                                                        {
+                                                                            "a": "{{6.Quantity}}",
+                                                                            "o": "exist"
+                                                                        },
+                                                                        {
+                                                                            "a": "{{6.Amount}}",
+                                                                            "o": "exist"
+                                                                        }
+                                                                    ]
+                                                                ]
+                                                            },
+                                                            "mapper": {
+                                                                "scope": "roundtrip",
+                                                                "variables": [
+                                                                    {
+                                                                        "name": "Quantity",
+                                                                        "value": "{{6.Quantity}}"
+                                                                    },
+                                                                    {
+                                                                        "name": "Unit Price",
+                                                                        "value": "{{6.Amount / 6.Quantity}}"
+                                                                    },
+                                                                    {
+                                                                        "name": "Amount",
+                                                                        "value": "{{6.Amount}}"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "metadata": {
+                                                                "designer": {
+                                                                    "x": 2400,
+                                                                    "y": 1200
+                                                                },
+                                                                "restore": {
+                                                                    "expect": {
+                                                                        "scope": {
+                                                                            "label": "One cycle"
+                                                                        },
+                                                                        "variables": {
+                                                                            "items": [
+                                                                                null,
+                                                                                null,
+                                                                                null
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "expect": [
+                                                                    {
+                                                                        "name": "variables",
+                                                                        "spec": [
+                                                                            {
+                                                                                "name": "name",
+                                                                                "type": "text",
+                                                                                "label": "Variable name",
+                                                                                "required": true
+                                                                            },
+                                                                            {
+                                                                                "name": "value",
+                                                                                "type": "any",
+                                                                                "label": "Variable value"
+                                                                            }
+                                                                        ],
+                                                                        "type": "array",
+                                                                        "label": "Variables"
+                                                                    },
+                                                                    {
+                                                                        "name": "scope",
+                                                                        "type": "select",
+                                                                        "label": "Variable lifetime",
+                                                                        "required": true,
+                                                                        "validate": {
+                                                                            "enum": [
+                                                                                "roundtrip",
+                                                                                "execution"
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "interface": [
+                                                                    {
+                                                                        "name": "Quantity",
+                                                                        "type": "any",
+                                                                        "label": "Quantity"
+                                                                    },
+                                                                    {
+                                                                        "name": "Unit Price",
+                                                                        "type": "any",
+                                                                        "label": "Unit Price"
+                                                                    },
+                                                                    {
+                                                                        "name": "Amount",
+                                                                        "type": "any",
+                                                                        "label": "Amount"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 14,
+                                            "module": "util:GetVariables",
+                                            "version": 1,
+                                            "parameters": {},
+                                            "mapper": {
+                                                "variables": [
+                                                    "Unit Price",
+                                                    "Quantity",
+                                                    "Amount"
+                                                ]
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2100,
+                                                    "y": 1500
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "variables": {
+                                                            "items": [
+                                                                null,
+                                                                null,
+                                                                null
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "expect": [
+                                                    {
+                                                        "name": "variables",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "type": "text",
+                                                            "label": "Variable name",
+                                                            "required": true
+                                                        },
+                                                        "type": "array",
+                                                        "label": "Variables"
+                                                    }
+                                                ],
+                                                "interface": [
+                                                    {
+                                                        "name": "Unit Price",
+                                                        "type": "any",
+                                                        "label": "Unit Price"
+                                                    },
+                                                    {
+                                                        "name": "Quantity",
+                                                        "type": "any",
+                                                        "label": "Quantity"
+                                                    },
+                                                    {
+                                                        "name": "Amount",
+                                                        "type": "any",
+                                                        "label": "Amount"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 15,
+                                            "module": "monday:ChangeMultipleColumnValues",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{3.id}}",
+                                                "boardId": "3465841067",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "numbers9",
+                                                        "columnValue": "{{14.Amount}}"
+                                                    },
+                                                    {
+                                                        "columnId": "numbers0",
+                                                        "columnValue": "{{14.Quantity}}"
+                                                    },
+                                                    {
+                                                        "columnId": "numbers",
+                                                        "columnValue": "{{14.`Unit Price`}}"
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2400,
+                                                    "y": 1500
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Subitems of Invoices  ::  private"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Amount"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Quantity"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Unit Price"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Column Values to Change",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 16,
+                            "module": "monday:ChangeMultipleColumnValues",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 183282
+                            },
+                            "mapper": {
+                                "itemId": "{{2.id}}",
+                                "boardId": "3465841015",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "status",
+                                        "columnValue": {
+                                            "index": "13",
+                                            "selectType": "index2index"
+                                        }
+                                    }
+                                ],
+                                "create_labels_if_missing": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 1800
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "itemId": {
+                                            "mode": "edit"
+                                        },
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "Invoices  ::  private"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Status"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "index": {
+                                                                "mode": "chose",
+                                                                "label": "Calculated"
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Index"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "itemId",
+                                        "type": "select",
+                                        "label": "Item ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Column Values to Change",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}

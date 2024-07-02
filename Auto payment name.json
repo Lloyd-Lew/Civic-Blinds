@@ -1,0 +1,161 @@
+{
+    "name": "Auto payment name",
+    "flow": [
+        {
+            "id": 2,
+            "module": "monday:watchBoardItems",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 320743
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": -152,
+                    "y": -30
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "Auto payment name"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:monday4",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "module": "monday:ChangeMultipleColumnValues",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 183282
+            },
+            "mapper": {
+                "itemId": "{{2.pulseId}}",
+                "boardId": "3466116643",
+                "columnValuesToChange": [
+                    {
+                        "columnId": "name",
+                        "columnValue": "P-{{2.pulseId}}"
+                    }
+                ],
+                "create_labels_if_missing": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 146,
+                    "y": -30
+                },
+                "restore": {
+                    "expect": {
+                        "itemId": {
+                            "mode": "edit"
+                        },
+                        "boardId": {
+                            "mode": "chose",
+                            "label": "Payments  ::  private"
+                        },
+                        "columnValuesToChange": {
+                            "mode": "chose",
+                            "items": [
+                                {
+                                    "columnId": {
+                                        "mode": "chose",
+                                        "label": "Name"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "monday"
+                            },
+                            "label": "My Monday v2 connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:monday",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "boardId",
+                        "type": "select",
+                        "label": "Board ID",
+                        "required": true
+                    },
+                    {
+                        "name": "create_labels_if_missing",
+                        "type": "boolean",
+                        "label": "Create Labels if Missing",
+                        "required": true
+                    },
+                    {
+                        "name": "itemId",
+                        "type": "select",
+                        "label": "Item ID",
+                        "required": true
+                    },
+                    {
+                        "name": "columnValuesToChange",
+                        "spec": [
+                            {
+                                "name": "columnId",
+                                "type": "select",
+                                "label": "Column ID",
+                                "dynamic": true,
+                                "options": {
+                                    "store": []
+                                },
+                                "required": true,
+                                "validate": false
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Column Values to Change",
+                        "required": true
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": true,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}

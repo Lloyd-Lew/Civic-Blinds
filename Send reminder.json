@@ -1,0 +1,770 @@
+{
+    "name": "Send reminder",
+    "flow": [
+        {
+            "id": 1,
+            "module": "monday:watchEventsInstant",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 278644
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "Send reminder"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:monday",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "module": "monday:GetItem",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 183282
+            },
+            "mapper": {
+                "id": "{{1.event.pulseId}}",
+                "boardId": "3465841015",
+                "showSubitems": true,
+                "showParentItem": true
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "boardId": {
+                            "label": "Invoices  ::  private"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "monday"
+                            },
+                            "label": "My Monday v2 connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:monday",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showParentItem",
+                        "type": "boolean",
+                        "label": "Show Parent Item",
+                        "required": true
+                    },
+                    {
+                        "name": "showSubitems",
+                        "type": "boolean",
+                        "label": "Show Subitems",
+                        "required": true
+                    },
+                    {
+                        "name": "boardId",
+                        "type": "select",
+                        "label": "Board ID (NOT MANDATORY)"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name"
+                    },
+                    {
+                        "name": "created_at",
+                        "type": "date",
+                        "label": "Created at"
+                    },
+                    {
+                        "name": "updated_at",
+                        "type": "date",
+                        "label": "Updated at"
+                    },
+                    {
+                        "name": "state",
+                        "type": "text",
+                        "label": "State"
+                    },
+                    {
+                        "name": "board",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Board"
+                    },
+                    {
+                        "name": "creator_id",
+                        "type": "uinteger",
+                        "label": "Creator ID"
+                    },
+                    {
+                        "name": "group",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Title"
+                            },
+                            {
+                                "name": "deleted",
+                                "type": "boolean",
+                                "label": "Deleted"
+                            },
+                            {
+                                "name": "archived",
+                                "type": "boolean",
+                                "label": "Archived"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Group"
+                    },
+                    {
+                        "name": "column_values",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Title"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            },
+                            {
+                                "name": "additional_info",
+                                "type": "text",
+                                "label": "Additional Info"
+                            },
+                            {
+                                "name": "text",
+                                "type": "text",
+                                "label": "Text"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Column Values"
+                    },
+                    {
+                        "name": "mappable_column_values",
+                        "spec": [
+                            {
+                                "name": "person",
+                                "spec": [
+                                    {
+                                        "name": "personsAndTeams",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "kind",
+                                                "type": "text",
+                                                "label": "Kind"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Persons and Teams"
+                                    },
+                                    {
+                                        "name": "changed_at",
+                                        "type": "date",
+                                        "label": "Changed at"
+                                    },
+                                    {
+                                        "name": "additonal_info",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Label"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Aditional info"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Salesperson"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Mappable column values"
+                    },
+                    {
+                        "name": "assets",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "public_url",
+                                "type": "url",
+                                "label": "Public URL"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            },
+                            {
+                                "name": "file_extension",
+                                "type": "text",
+                                "label": "File Extension"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Assets"
+                    },
+                    {
+                        "name": "parent_item",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "created_at",
+                                "type": "date",
+                                "label": "Created at"
+                            },
+                            {
+                                "name": "updated_at",
+                                "type": "date",
+                                "label": "Updated at"
+                            },
+                            {
+                                "name": "state",
+                                "type": "text",
+                                "label": "State"
+                            },
+                            {
+                                "name": "board",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Board"
+                            },
+                            {
+                                "name": "creator_id",
+                                "type": "uinteger",
+                                "label": "Creator ID"
+                            },
+                            {
+                                "name": "group",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Group"
+                            },
+                            {
+                                "name": "column_values",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "title",
+                                        "type": "text",
+                                        "label": "Title"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "additional_info",
+                                        "type": "text",
+                                        "label": "Additional Info"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "array",
+                                "label": "Column Values"
+                            },
+                            {
+                                "name": "mappable_column_values",
+                                "spec": [],
+                                "type": "collection",
+                                "label": "Mappable column values"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Parent Item"
+                    },
+                    {
+                        "name": "subitems",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "created_at",
+                                "type": "date",
+                                "label": "Created at"
+                            },
+                            {
+                                "name": "updated_at",
+                                "type": "date",
+                                "label": "Updated at"
+                            },
+                            {
+                                "name": "state",
+                                "type": "text",
+                                "label": "State"
+                            },
+                            {
+                                "name": "board",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Board"
+                            },
+                            {
+                                "name": "creator_id",
+                                "type": "uinteger",
+                                "label": "Creator ID"
+                            },
+                            {
+                                "name": "group",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Group"
+                            },
+                            {
+                                "name": "column_values",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "title",
+                                        "type": "text",
+                                        "label": "Title"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "additional_info",
+                                        "type": "text",
+                                        "label": "Additional Info"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "array",
+                                "label": "Column Values"
+                            },
+                            {
+                                "name": "mappable_column_values",
+                                "spec": [],
+                                "type": "collection",
+                                "label": "Mappable column values"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Subitems"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 5,
+            "module": "invoiceninja:makeApiCall",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 417758
+            },
+            "filter": {
+                "name": "",
+                "conditions": [
+                    [
+                        {
+                            "a": "{{4.mappable_column_values.text7}}",
+                            "o": "exist"
+                        }
+                    ]
+                ]
+            },
+            "mapper": {
+                "url": "/v1/emails",
+                "body": "{\n\t\"entity\": \"invoice\",\n\t\"entity_id\": \"{{4.mappable_column_values.text7}}\",\n\t\"template\": \"email_template_reminder1\"\n}",
+                "method": "POST",
+                "headers": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 0,
+                    "name": "Send reminder"
+                },
+                "restore": {
+                    "expect": {
+                        "qs": {
+                            "mode": "chose"
+                        },
+                        "method": {
+                            "mode": "chose",
+                            "label": "POST"
+                        },
+                        "headers": {
+                            "mode": "chose",
+                            "items": [
+                                null
+                            ]
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "invoiceninja2"
+                            },
+                            "label": "My Invoice Ninja connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:invoiceninja2",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "text",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "method",
+                        "type": "select",
+                        "label": "Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "GET",
+                                "POST",
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "headers",
+                        "spec": [
+                            {
+                                "name": "key",
+                                "type": "text",
+                                "label": "Key"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Headers"
+                    },
+                    {
+                        "name": "qs",
+                        "spec": [
+                            {
+                                "name": "key",
+                                "type": "text",
+                                "label": "Key"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Query String"
+                    },
+                    {
+                        "name": "body",
+                        "type": "any",
+                        "label": "Body"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 6,
+            "module": "monday:ChangeMultipleColumnValues",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 183282
+            },
+            "mapper": {
+                "itemId": "{{4.id}}",
+                "boardId": "3465841015",
+                "columnValuesToChange": [
+                    {
+                        "columnId": "status",
+                        "columnValue": {
+                            "label": "Sent",
+                            "settings": "{\"done_colors\":[1],\"color_mapping\":{\"2\":15,\"15\":2},\"labels\":{\"0\":\"Partially Paid\",\"1\":\"Created\",\"2\":\"Sent\",\"3\":\"Paid\",\"4\":\"Error\",\"5\":\"Pending Approval\",\"6\":\"Send\",\"7\":\"Create\",\"8\":\"Void\",\"9\":\"Send Reminder\",\"10\":\"Voided\",\"11\":\"Overdue\"},\"labels_positions_v2\":{\"0\":5,\"1\":2,\"2\":4,\"3\":6,\"4\":7,\"5\":0,\"6\":3,\"7\":1,\"8\":9,\"9\":8,\"10\":10,\"11\":11},\"labels_colors\":{\"0\":{\"color\":\"#fdab3d\",\"border\":\"#E99729\",\"var_name\":\"orange\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00B461\",\"var_name\":\"green-shadow\"},\"2\":{\"color\":\"#9CD326\",\"border\":\"#89B921\",\"var_name\":\"lime-green\"},\"3\":{\"color\":\"#0086c0\",\"border\":\"#3DB0DF\",\"var_name\":\"blue-links\"},\"4\":{\"color\":\"#a25ddc\",\"border\":\"#9238AF\",\"var_name\":\"purple\"},\"5\":{\"color\":\"#c4c4c4\",\"border\":\"#B0B0B0\",\"var_name\":\"grey\"},\"6\":{\"color\":\"#037f4c\",\"border\":\"#006B38\",\"var_name\":\"grass-green\"},\"7\":{\"color\":\"#579bfc\",\"border\":\"#4387E8\",\"var_name\":\"bright-blue\"},\"8\":{\"color\":\"#CAB641\",\"border\":\"#C0AB31\",\"var_name\":\"mustered\"},\"9\":{\"color\":\"#FFCB00\",\"border\":\"#C0AB1B\",\"var_name\":\"yellow\"},\"10\":{\"color\":\"#333333\",\"border\":\"#000\",\"var_name\":\"soft-black\"},\"11\":{\"color\":\"#BB3354\",\"border\":\"#A42D4A\",\"var_name\":\"dark-red\"}}}",
+                            "selectType": "label2index"
+                        }
+                    }
+                ],
+                "create_labels_if_missing": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 900,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "itemId": {
+                            "mode": "edit"
+                        },
+                        "boardId": {
+                            "mode": "chose",
+                            "label": "Invoices  ::  private"
+                        },
+                        "columnValuesToChange": {
+                            "mode": "chose",
+                            "items": [
+                                {
+                                    "columnId": {
+                                        "mode": "chose",
+                                        "label": "Status"
+                                    },
+                                    "columnValue": {
+                                        "nested": {
+                                            "label": {
+                                                "mode": "chose",
+                                                "label": "Sent"
+                                            },
+                                            "selectType": {
+                                                "mode": "chose",
+                                                "label": "Label"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "monday"
+                            },
+                            "label": "My Monday v2 connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:monday",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "boardId",
+                        "type": "select",
+                        "label": "Board ID",
+                        "required": true
+                    },
+                    {
+                        "name": "create_labels_if_missing",
+                        "type": "boolean",
+                        "label": "Create Labels if Missing",
+                        "required": true
+                    },
+                    {
+                        "name": "itemId",
+                        "type": "select",
+                        "label": "Item ID",
+                        "required": true
+                    },
+                    {
+                        "name": "columnValuesToChange",
+                        "spec": [
+                            {
+                                "name": "columnId",
+                                "type": "select",
+                                "label": "Column ID",
+                                "dynamic": true,
+                                "options": {
+                                    "store": []
+                                },
+                                "required": true,
+                                "validate": false
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Column Values to Change",
+                        "required": true
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}

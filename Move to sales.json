@@ -1,0 +1,3157 @@
+{
+    "name": "Move to sales",
+    "flow": [
+        {
+            "id": 2,
+            "module": "gateway:CustomWebHook",
+            "version": 1,
+            "parameters": {
+                "hook": 184148,
+                "maxResults": 1
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 1050
+                },
+                "restore": {
+                    "parameters": {
+                        "hook": {
+                            "data": {
+                                "editable": "true"
+                            },
+                            "label": "To opportunities"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "hook",
+                        "type": "hook:gateway-webhook",
+                        "label": "Webhook",
+                        "required": true
+                    },
+                    {
+                        "name": "maxResults",
+                        "type": "number",
+                        "label": "Maximum number of results"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "value",
+                        "type": "text"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "module": "monday:GetItem",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 183282
+            },
+            "mapper": {
+                "id": "{{2.event.pulseId}}",
+                "boardId": "2724672341",
+                "showSubitems": true,
+                "showParentItem": true
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 1050
+                },
+                "restore": {
+                    "expect": {
+                        "boardId": {
+                            "label": "New leads  ::  private"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "monday"
+                            },
+                            "label": "My Monday v2 connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:monday",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showParentItem",
+                        "type": "boolean",
+                        "label": "Show Parent Item",
+                        "required": true
+                    },
+                    {
+                        "name": "showSubitems",
+                        "type": "boolean",
+                        "label": "Show Subitems",
+                        "required": true
+                    },
+                    {
+                        "name": "boardId",
+                        "type": "select",
+                        "label": "Board ID (NOT MANDATORY)"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name"
+                    },
+                    {
+                        "name": "created_at",
+                        "type": "date",
+                        "label": "Created at"
+                    },
+                    {
+                        "name": "updated_at",
+                        "type": "date",
+                        "label": "Updated at"
+                    },
+                    {
+                        "name": "state",
+                        "type": "text",
+                        "label": "State"
+                    },
+                    {
+                        "name": "board",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Board"
+                    },
+                    {
+                        "name": "creator_id",
+                        "type": "uinteger",
+                        "label": "Creator ID"
+                    },
+                    {
+                        "name": "group",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Title"
+                            },
+                            {
+                                "name": "deleted",
+                                "type": "boolean",
+                                "label": "Deleted"
+                            },
+                            {
+                                "name": "archived",
+                                "type": "boolean",
+                                "label": "Archived"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Group"
+                    },
+                    {
+                        "name": "column_values",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Title"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            },
+                            {
+                                "name": "additional_info",
+                                "type": "text",
+                                "label": "Additional Info"
+                            },
+                            {
+                                "name": "text",
+                                "type": "text",
+                                "label": "Text"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Column Values"
+                    },
+                    {
+                        "name": "mappable_column_values",
+                        "spec": [],
+                        "type": "collection",
+                        "label": "Mappable column values"
+                    },
+                    {
+                        "name": "assets",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "public_url",
+                                "type": "url",
+                                "label": "Public URL"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            },
+                            {
+                                "name": "file_extension",
+                                "type": "text",
+                                "label": "File Extension"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Assets"
+                    },
+                    {
+                        "name": "parent_item",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "created_at",
+                                "type": "date",
+                                "label": "Created at"
+                            },
+                            {
+                                "name": "updated_at",
+                                "type": "date",
+                                "label": "Updated at"
+                            },
+                            {
+                                "name": "state",
+                                "type": "text",
+                                "label": "State"
+                            },
+                            {
+                                "name": "board",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Board"
+                            },
+                            {
+                                "name": "creator_id",
+                                "type": "uinteger",
+                                "label": "Creator ID"
+                            },
+                            {
+                                "name": "group",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Group"
+                            },
+                            {
+                                "name": "column_values",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "title",
+                                        "type": "text",
+                                        "label": "Title"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "additional_info",
+                                        "type": "text",
+                                        "label": "Additional Info"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "array",
+                                "label": "Column Values"
+                            },
+                            {
+                                "name": "mappable_column_values",
+                                "spec": [],
+                                "type": "collection",
+                                "label": "Mappable column values"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Parent Item"
+                    },
+                    {
+                        "name": "subitems",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "created_at",
+                                "type": "date",
+                                "label": "Created at"
+                            },
+                            {
+                                "name": "updated_at",
+                                "type": "date",
+                                "label": "Updated at"
+                            },
+                            {
+                                "name": "state",
+                                "type": "text",
+                                "label": "State"
+                            },
+                            {
+                                "name": "board",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Board"
+                            },
+                            {
+                                "name": "creator_id",
+                                "type": "uinteger",
+                                "label": "Creator ID"
+                            },
+                            {
+                                "name": "group",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Group"
+                            },
+                            {
+                                "name": "column_values",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "title",
+                                        "type": "text",
+                                        "label": "Title"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "additional_info",
+                                        "type": "text",
+                                        "label": "Additional Info"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "array",
+                                "label": "Column Values"
+                            },
+                            {
+                                "name": "mappable_column_values",
+                                "spec": [],
+                                "type": "collection",
+                                "label": "Mappable column values"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Subitems"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 13,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 1050
+                }
+            },
+            "routes": [
+                {
+                    "disabled": true,
+                    "flow": [
+                        {
+                            "id": 6,
+                            "module": "monday:CreateItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 183282
+                            },
+                            "filter": {
+                                "name": "Route v1",
+                                "conditions": []
+                            },
+                            "mapper": {
+                                "name": "{{4.name}}",
+                                "boardId": "2725159990",
+                                "groupId": "topics",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "status_161",
+                                        "columnValue": {
+                                            "label": "{{4.mappable_column_values.status_10.text}}",
+                                            "settings": "{\"done_colors\":[1],\"color_mapping\":{\"2\":102,\"102\":2},\"labels\":{\"0\":\"Working on it\",\"1\":\"Home\",\"2\":\"Phone\",\"5\":\"No\"},\"labels_colors\":{\"0\":{\"color\":\"#fdab3d\",\"border\":\"#E99729\",\"var_name\":\"orange\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00B461\",\"var_name\":\"green-shadow\"},\"2\":{\"color\":\"#faa1f1\",\"border\":\"#faa1f1\",\"var_name\":\"bubble\"},\"5\":{\"color\":\"#c4c4c4\",\"border\":\"#B0B0B0\",\"var_name\":\"grey\"}}}",
+                                            "selectType": "label2index"
+                                        }
+                                    },
+                                    {
+                                        "columnId": "status7",
+                                        "columnValue": {
+                                            "label": "{{4.mappable_column_values.status8.text}}",
+                                            "settings": "{\"done_colors\":[1],\"color_mapping\":{\"0\":7,\"1\":2,\"2\":17,\"3\":11,\"4\":106,\"7\":10,\"8\":19,\"9\":108,\"10\":0,\"11\":1,\"12\":151,\"15\":8,\"16\":9,\"17\":105,\"19\":107,\"104\":15,\"105\":104,\"106\":109,\"107\":12,\"108\":156,\"109\":3,\"110\":153,\"151\":160,\"153\":16,\"154\":4,\"156\":154,\"158\":158,\"160\":110},\"labels\":{\"0\":\"Contacted\",\"1\":\"In-Home Consultation\",\"2\":\"Future Follow-Up\",\"3\":\"Phone Consultation\",\"4\":\"More Info Requested\",\"5\":\"New\",\"6\":\"Completed\",\"7\":\"Lost\",\"8\":\"Quoted\",\"9\":\"Sent to BDM\",\"10\":\"Sold\",\"11\":\"Qualified\"},\"labels_positions_v2\":{\"0\":1,\"1\":4,\"2\":9,\"3\":3,\"4\":2,\"5\":0,\"6\":7,\"7\":8,\"8\":5,\"9\":10,\"10\":6},\"labels_colors\":{\"0\":{\"color\":\"#579bfc\",\"border\":\"#4387E8\",\"var_name\":\"bright-blue\"},\"1\":{\"color\":\"#e2445c\",\"border\":\"#CE3048\",\"var_name\":\"red-shadow\"},\"2\":{\"color\":\"#808080\",\"border\":\"#707070\",\"var_name\":\"trolley-grey\"},\"3\":{\"color\":\"#BB3354\",\"border\":\"#A42D4A\",\"var_name\":\"dark-red\"},\"4\":{\"color\":\"#68a1bd\",\"border\":\"#68a1bd\",\"var_name\":\"river\"},\"5\":{\"color\":\"#c4c4c4\",\"border\":\"#B0B0B0\",\"var_name\":\"grey\"},\"6\":{\"color\":\"#037f4c\",\"border\":\"#006B38\",\"var_name\":\"grass-green\"},\"7\":{\"color\":\"#333333\",\"border\":\"#000\",\"var_name\":\"soft-black\"},\"8\":{\"color\":\"#FF642E\",\"border\":\"#E05828\",\"var_name\":\"dark-orange\"},\"9\":{\"color\":\"#4eccc6\",\"border\":\"#4eccc6\",\"var_name\":\"australia\"},\"10\":{\"color\":\"#fdab3d\",\"border\":\"#E99729\",\"var_name\":\"orange\"},\"11\":{\"color\":\"#00c875\",\"border\":\"#00B461\",\"var_name\":\"green-shadow\"}}}",
+                                            "selectType": "label2index"
+                                        }
+                                    }
+                                ],
+                                "create_labels_if_missing": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 150
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "Sales  ::  private"
+                                        },
+                                        "groupId": {
+                                            "mode": "chose",
+                                            "label": "New"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Consultation Type"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "label": {
+                                                                "mode": "edit"
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Status"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "label": {
+                                                                "mode": "edit"
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Item Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "groupId",
+                                        "type": "select",
+                                        "label": "Group ID"
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Array of column values to change"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 5,
+                            "module": "builtin:BasicRouter",
+                            "version": 1,
+                            "mapper": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 150
+                                }
+                            },
+                            "routes": [
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 7,
+                                            "module": "monday:CreateItem",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "filter": {
+                                                "name": "",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{4.mappable_column_values.connect_boards.linkedPulseIds[].linkedPulseId}}",
+                                                            "o": "notexist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "name": "{{4.name}}",
+                                                "boardId": "2735000932",
+                                                "groupId": "topics",
+                                                "columnValuesToChange": [],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 0
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Contacts  ::  private"
+                                                        },
+                                                        "groupId": {
+                                                            "mode": "chose",
+                                                            "label": "Contacts"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "name",
+                                                        "type": "text",
+                                                        "label": "Item Name",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "groupId",
+                                                        "type": "select",
+                                                        "label": "Group ID"
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Array of column values to change"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 9,
+                                            "module": "monday:ChangeMultipleColumnValues",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{6.id}}",
+                                                "boardId": "2725159990",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "connect_boards",
+                                                        "columnValue": {
+                                                            "item_ids": "{{7.id}}"
+                                                        }
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1800,
+                                                    "y": 0
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Sales  ::  private"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Contacts"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "item_ids": {
+                                                                                "mode": "edit"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Column Values to Change",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 8,
+                                            "module": "monday:ChangeMultipleColumnValues",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "filter": {
+                                                "name": "",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{4.mappable_column_values.connect_boards.linkedPulseIds[].linkedPulseId}}",
+                                                            "o": "exist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{6.id}}",
+                                                "boardId": "2725159990",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "connect_boards",
+                                                        "columnValue": {
+                                                            "item_ids": "{{4.mappable_column_values.connect_boards.linkedPulseIds[].linkedPulseId}}"
+                                                        }
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 300
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Sales  ::  private"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Contacts"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "item_ids": {
+                                                                                "mode": "edit"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Column Values to Change",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "disabled": true,
+                    "flow": [
+                        {
+                            "id": 12,
+                            "module": "monday:DeleteItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 183282
+                            },
+                            "filter": {
+                                "name": "Route v1",
+                                "conditions": []
+                            },
+                            "mapper": {
+                                "id": "{{4.id}}",
+                                "isToArchiveItem": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 600
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "isToArchiveItem",
+                                        "type": "boolean",
+                                        "label": "Is to Just Archive",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "disabled": true,
+                    "flow": [
+                        {
+                            "id": 18,
+                            "module": "monday:CreateItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 183282
+                            },
+                            "filter": {
+                                "name": "Route v2",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{4.mappable_column_values.connect_boards.linkedPulseIds[].linkedPulseId}}",
+                                            "o": "notexist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "name": "{{4.name}}",
+                                "boardId": "2735000932",
+                                "groupId": "topics",
+                                "columnValuesToChange": [],
+                                "create_labels_if_missing": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 900
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "Contacts  ::  private"
+                                        },
+                                        "groupId": {
+                                            "mode": "chose",
+                                            "label": "Contacts"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Item Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "groupId",
+                                        "type": "select",
+                                        "label": "Group ID"
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Array of column values to change"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 23,
+                            "module": "util:FunctionSleep",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "duration": "30"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 900
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "duration",
+                                        "type": "uinteger",
+                                        "label": "Delay",
+                                        "required": true,
+                                        "validate": {
+                                            "max": 300,
+                                            "min": 1
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 22,
+                            "module": "monday:GetItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 183282
+                            },
+                            "mapper": {
+                                "id": "{{4.id}}",
+                                "boardId": "",
+                                "showSubitems": false,
+                                "showParentItem": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 900
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "boardId": {
+                                            "label": "Empty"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "showParentItem",
+                                        "type": "boolean",
+                                        "label": "Show Parent Item",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "showSubitems",
+                                        "type": "boolean",
+                                        "label": "Show Subitems",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID (NOT MANDATORY)"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Name"
+                                    },
+                                    {
+                                        "name": "created_at",
+                                        "type": "date",
+                                        "label": "Created at"
+                                    },
+                                    {
+                                        "name": "updated_at",
+                                        "type": "date",
+                                        "label": "Updated at"
+                                    },
+                                    {
+                                        "name": "state",
+                                        "type": "text",
+                                        "label": "State"
+                                    },
+                                    {
+                                        "name": "board",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Board"
+                                    },
+                                    {
+                                        "name": "creator_id",
+                                        "type": "uinteger",
+                                        "label": "Creator ID"
+                                    },
+                                    {
+                                        "name": "group",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "text",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "title",
+                                                "type": "text",
+                                                "label": "Title"
+                                            },
+                                            {
+                                                "name": "deleted",
+                                                "type": "boolean",
+                                                "label": "Deleted"
+                                            },
+                                            {
+                                                "name": "archived",
+                                                "type": "boolean",
+                                                "label": "Archived"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Group"
+                                    },
+                                    {
+                                        "name": "column_values",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "text",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "title",
+                                                "type": "text",
+                                                "label": "Title"
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            },
+                                            {
+                                                "name": "additional_info",
+                                                "type": "text",
+                                                "label": "Additional Info"
+                                            },
+                                            {
+                                                "name": "text",
+                                                "type": "text",
+                                                "label": "Text"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Column Values"
+                                    },
+                                    {
+                                        "name": "mappable_column_values",
+                                        "spec": [],
+                                        "type": "collection",
+                                        "label": "Mappable column values"
+                                    },
+                                    {
+                                        "name": "assets",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name"
+                                            },
+                                            {
+                                                "name": "public_url",
+                                                "type": "url",
+                                                "label": "Public URL"
+                                            },
+                                            {
+                                                "name": "url",
+                                                "type": "url",
+                                                "label": "URL"
+                                            },
+                                            {
+                                                "name": "file_extension",
+                                                "type": "text",
+                                                "label": "File Extension"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Assets"
+                                    },
+                                    {
+                                        "name": "parent_item",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name"
+                                            },
+                                            {
+                                                "name": "created_at",
+                                                "type": "date",
+                                                "label": "Created at"
+                                            },
+                                            {
+                                                "name": "updated_at",
+                                                "type": "date",
+                                                "label": "Updated at"
+                                            },
+                                            {
+                                                "name": "state",
+                                                "type": "text",
+                                                "label": "State"
+                                            },
+                                            {
+                                                "name": "board",
+                                                "spec": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "uinteger",
+                                                        "label": "ID"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Board"
+                                            },
+                                            {
+                                                "name": "creator_id",
+                                                "type": "uinteger",
+                                                "label": "Creator ID"
+                                            },
+                                            {
+                                                "name": "group",
+                                                "spec": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "text",
+                                                        "label": "ID"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Group"
+                                            },
+                                            {
+                                                "name": "column_values",
+                                                "spec": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "text",
+                                                        "label": "ID"
+                                                    },
+                                                    {
+                                                        "name": "title",
+                                                        "type": "text",
+                                                        "label": "Title"
+                                                    },
+                                                    {
+                                                        "name": "value",
+                                                        "type": "text",
+                                                        "label": "Value"
+                                                    },
+                                                    {
+                                                        "name": "additional_info",
+                                                        "type": "text",
+                                                        "label": "Additional Info"
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "type": "text",
+                                                        "label": "Text"
+                                                    }
+                                                ],
+                                                "type": "array",
+                                                "label": "Column Values"
+                                            },
+                                            {
+                                                "name": "mappable_column_values",
+                                                "spec": [],
+                                                "type": "collection",
+                                                "label": "Mappable column values"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Parent Item"
+                                    },
+                                    {
+                                        "name": "subitems",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name"
+                                            },
+                                            {
+                                                "name": "created_at",
+                                                "type": "date",
+                                                "label": "Created at"
+                                            },
+                                            {
+                                                "name": "updated_at",
+                                                "type": "date",
+                                                "label": "Updated at"
+                                            },
+                                            {
+                                                "name": "state",
+                                                "type": "text",
+                                                "label": "State"
+                                            },
+                                            {
+                                                "name": "board",
+                                                "spec": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "uinteger",
+                                                        "label": "ID"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Board"
+                                            },
+                                            {
+                                                "name": "creator_id",
+                                                "type": "uinteger",
+                                                "label": "Creator ID"
+                                            },
+                                            {
+                                                "name": "group",
+                                                "spec": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "text",
+                                                        "label": "ID"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Group"
+                                            },
+                                            {
+                                                "name": "column_values",
+                                                "spec": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "text",
+                                                        "label": "ID"
+                                                    },
+                                                    {
+                                                        "name": "title",
+                                                        "type": "text",
+                                                        "label": "Title"
+                                                    },
+                                                    {
+                                                        "name": "value",
+                                                        "type": "text",
+                                                        "label": "Value"
+                                                    },
+                                                    {
+                                                        "name": "additional_info",
+                                                        "type": "text",
+                                                        "label": "Additional Info"
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "type": "text",
+                                                        "label": "Text"
+                                                    }
+                                                ],
+                                                "type": "array",
+                                                "label": "Column Values"
+                                            },
+                                            {
+                                                "name": "mappable_column_values",
+                                                "spec": [],
+                                                "type": "collection",
+                                                "label": "Mappable column values"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Subitems"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 19,
+                            "module": "monday:ChangeMultipleColumnValues",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 183282
+                            },
+                            "mapper": {
+                                "itemId": "{{22.id}}",
+                                "boardId": "{{22.board.id}}",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "connect_boards",
+                                        "columnValue": {
+                                            "anyValueToPass": "{{18.id}}"
+                                        }
+                                    }
+                                ],
+                                "create_labels_if_missing": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1800,
+                                    "y": 900
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "itemId": {
+                                            "mode": "edit"
+                                        },
+                                        "boardId": {
+                                            "mode": "edit"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Contacts"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "itemId",
+                                        "type": "select",
+                                        "label": "Item ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Column Values to Change",
+                                        "required": true
+                                    }
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 21,
+                                    "module": "monday:CreateUpdate",
+                                    "version": 1,
+                                    "parameters": {
+                                        "__IMTCONN__": 183282
+                                    },
+                                    "mapper": {
+                                        "body": "There was error while trying to connect newly created contact to this item.\n{{19.error.type}}\n{{19.error.message}}\n{{19.error.detail}}",
+                                        "itemId": "{{4.id}}"
+                                    },
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 2100,
+                                            "y": 900
+                                        },
+                                        "restore": {
+                                            "parameters": {
+                                                "__IMTCONN__": {
+                                                    "data": {
+                                                        "scoped": "true",
+                                                        "connection": "monday"
+                                                    },
+                                                    "label": "My Monday v2 connection"
+                                                }
+                                            }
+                                        },
+                                        "parameters": [
+                                            {
+                                                "name": "__IMTCONN__",
+                                                "type": "account:monday",
+                                                "label": "Connection",
+                                                "required": true
+                                            }
+                                        ],
+                                        "expect": [
+                                            {
+                                                "name": "itemId",
+                                                "type": "uinteger",
+                                                "label": "Item ID",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "body",
+                                                "type": "text",
+                                                "label": "Body",
+                                                "required": true
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "disabled": true,
+                    "flow": [
+                        {
+                            "id": 24,
+                            "module": "builtin:BasicRouter",
+                            "version": 1,
+                            "filter": {
+                                "name": "Route v3",
+                                "conditions": []
+                            },
+                            "mapper": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 1350
+                                }
+                            },
+                            "routes": [
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 25,
+                                            "module": "monday:CreateItem",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "filter": {
+                                                "name": "Contacts does not exist",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{4.mappable_column_values.connect_boards.linkedPulseIds[].linkedPulseId}}",
+                                                            "o": "notexist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "name": "{{4.name}}",
+                                                "boardId": "2735000932",
+                                                "groupId": "topics",
+                                                "columnValuesToChange": [],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1200,
+                                                    "y": 1200,
+                                                    "name": "Contacts"
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Contacts  ::  private"
+                                                        },
+                                                        "groupId": {
+                                                            "mode": "chose",
+                                                            "label": "Contacts"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "name",
+                                                        "type": "text",
+                                                        "label": "Item Name",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "groupId",
+                                                        "type": "select",
+                                                        "label": "Group ID"
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Array of column values to change"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 26,
+                                            "module": "monday:ChangeMultipleColumnValues",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{4.id}}",
+                                                "boardId": "2724672341",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "connect_boards",
+                                                        "columnValue": {
+                                                            "item_ids": "{{25.id}}"
+                                                        }
+                                                    },
+                                                    {
+                                                        "columnId": "status8",
+                                                        "columnValue": {
+                                                            "label": "Qualified",
+                                                            "settings": "{\"done_colors\":[1],\"color_mapping\":{\"0\":11,\"11\":0},\"labels\":{\"0\":\"Appointment\",\"1\":\"Contacted\",\"2\":\"Qualified\",\"3\":\"To qualify\",\"5\":\"\"},\"labels_positions_v2\":{\"0\":2,\"1\":1,\"2\":3,\"3\":4,\"5\":0},\"labels_colors\":{\"0\":{\"color\":\"#BB3354\",\"border\":\"#A42D4A\",\"var_name\":\"dark-red\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00B461\",\"var_name\":\"green-shadow\"},\"2\":{\"color\":\"#e2445c\",\"border\":\"#CE3048\",\"var_name\":\"red-shadow\"},\"3\":{\"color\":\"#0086c0\",\"border\":\"#3DB0DF\",\"var_name\":\"blue-links\"},\"5\":{\"color\":\"#c4c4c4\",\"border\":\"#B0B0B0\",\"var_name\":\"grey\"}}}",
+                                                            "selectType": "label2index"
+                                                        }
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 1200
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "New leads  ::  private"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Contacts"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "item_ids": {
+                                                                                "mode": "edit"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Lead Status"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "label": {
+                                                                                "mode": "chose",
+                                                                                "label": "Qualified"
+                                                                            },
+                                                                            "selectType": {
+                                                                                "mode": "chose",
+                                                                                "label": "Label"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Column Values to Change",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 27,
+                                            "module": "monday:CreateItem",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "filter": {
+                                                "name": "",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{4.mappable_column_values.link_to_new_leads.linkedPulseIds[].linkedPulseId}}",
+                                                            "o": "notexist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "name": "{{4.name}}",
+                                                "boardId": "3149239081",
+                                                "groupId": "new_group23888",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "connect_boards",
+                                                        "columnValue": {
+                                                            "item_ids": "{{25.id}}"
+                                                        }
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1800,
+                                                    "y": 1200,
+                                                    "name": "Sales"
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Sales  ::  public"
+                                                        },
+                                                        "groupId": {
+                                                            "mode": "chose",
+                                                            "label": "Qualified"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Contacts"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "item_ids": {
+                                                                                "mode": "edit"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "name",
+                                                        "type": "text",
+                                                        "label": "Item Name",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "groupId",
+                                                        "type": "select",
+                                                        "label": "Group ID"
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Array of column values to change"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 33,
+                                            "module": "monday:ChangeMultipleColumnValues",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{4.id}}",
+                                                "boardId": "2724672341",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "link_to_new_leads",
+                                                        "columnValue": {
+                                                            "item_ids": "{{27.id}}"
+                                                        }
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2100,
+                                                    "y": 1200
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "New leads  ::  private"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Sales"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "item_ids": {
+                                                                                "mode": "edit"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Column Values to Change",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 28,
+                                            "module": "monday:CreateItem",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "filter": {
+                                                "name": "",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{4.mappable_column_values.connect_boards.linkedPulseIds[].linkedPulseId}}",
+                                                            "o": "exist"
+                                                        },
+                                                        {
+                                                            "a": "{{4.mappable_column_values.link_to_new_leads.linkedPulseIds[].linkedPulseId}}",
+                                                            "o": "notexist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "name": "{{4.name}}",
+                                                "boardId": "3149239081",
+                                                "groupId": "new_group23888",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "connect_boards",
+                                                        "columnValue": {
+                                                            "item_ids": "{{4.mappable_column_values.connect_boards.linkedPulseIds[].linkedPulseId}}"
+                                                        }
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1200,
+                                                    "y": 1500,
+                                                    "name": "Sales"
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Sales  ::  public"
+                                                        },
+                                                        "groupId": {
+                                                            "mode": "chose",
+                                                            "label": "Qualified"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Contacts"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "item_ids": {
+                                                                                "mode": "edit"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "name",
+                                                        "type": "text",
+                                                        "label": "Item Name",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "groupId",
+                                                        "type": "select",
+                                                        "label": "Group ID"
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Array of column values to change"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 35,
+                                            "module": "monday:ChangeMultipleColumnValues",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{4.id}}",
+                                                "boardId": "2724672341",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "link_to_new_leads",
+                                                        "columnValue": {
+                                                            "item_ids": "{{28.id}}"
+                                                        }
+                                                    },
+                                                    {
+                                                        "columnId": "status8",
+                                                        "columnValue": {
+                                                            "label": "Qualified",
+                                                            "settings": "{\"done_colors\":[1],\"color_mapping\":{\"0\":11,\"11\":0},\"labels\":{\"0\":\"Appointment\",\"1\":\"Contacted\",\"2\":\"Qualified\",\"3\":\"To qualify\",\"5\":\"\"},\"labels_positions_v2\":{\"0\":2,\"1\":1,\"2\":3,\"3\":4,\"5\":0},\"labels_colors\":{\"0\":{\"color\":\"#BB3354\",\"border\":\"#A42D4A\",\"var_name\":\"dark-red\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00B461\",\"var_name\":\"green-shadow\"},\"2\":{\"color\":\"#e2445c\",\"border\":\"#CE3048\",\"var_name\":\"red-shadow\"},\"3\":{\"color\":\"#0086c0\",\"border\":\"#3DB0DF\",\"var_name\":\"blue-links\"},\"5\":{\"color\":\"#c4c4c4\",\"border\":\"#B0B0B0\",\"var_name\":\"grey\"}}}",
+                                                            "selectType": "label2index"
+                                                        }
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 1500
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "New leads  ::  private"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Sales"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "item_ids": {
+                                                                                "mode": "edit"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Lead Status"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "label": {
+                                                                                "mode": "chose",
+                                                                                "label": "Qualified"
+                                                                            },
+                                                                            "selectType": {
+                                                                                "mode": "chose",
+                                                                                "label": "Label"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Column Values to Change",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 37,
+                            "module": "builtin:BasicRouter",
+                            "version": 1,
+                            "filter": {
+                                "name": "Route v4",
+                                "conditions": []
+                            },
+                            "mapper": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 1950
+                                }
+                            },
+                            "routes": [
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 38,
+                                            "module": "monday:CreateItem",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "filter": {
+                                                "name": "Contacts does not exist",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{4.mappable_column_values.connect_boards.linkedPulseIds[].linkedPulseId}}",
+                                                            "o": "notexist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "name": "{{4.name}}",
+                                                "boardId": "2735000932",
+                                                "groupId": "topics",
+                                                "columnValuesToChange": [],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1200,
+                                                    "y": 1800,
+                                                    "name": "Contacts"
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Contacts  ::  private"
+                                                        },
+                                                        "groupId": {
+                                                            "mode": "chose",
+                                                            "label": "Contacts"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "name",
+                                                        "type": "text",
+                                                        "label": "Item Name",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "groupId",
+                                                        "type": "select",
+                                                        "label": "Group ID"
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Array of column values to change"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 39,
+                                            "module": "monday:ChangeMultipleColumnValues",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{4.id}}",
+                                                "boardId": "2724672341",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "connect_boards",
+                                                        "columnValue": {
+                                                            "item_ids": "{{38.id}}"
+                                                        }
+                                                    },
+                                                    {
+                                                        "columnId": "status8",
+                                                        "columnValue": {
+                                                            "label": "Qualified",
+                                                            "settings": "{\"done_colors\":[1],\"color_mapping\":{\"0\":11,\"11\":0},\"labels\":{\"0\":\"Appointment\",\"1\":\"Contacted\",\"2\":\"Qualified\",\"3\":\"To qualify\",\"5\":\"\"},\"labels_positions_v2\":{\"0\":2,\"1\":1,\"2\":3,\"3\":4,\"5\":0},\"labels_colors\":{\"0\":{\"color\":\"#BB3354\",\"border\":\"#A42D4A\",\"var_name\":\"dark-red\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00B461\",\"var_name\":\"green-shadow\"},\"2\":{\"color\":\"#e2445c\",\"border\":\"#CE3048\",\"var_name\":\"red-shadow\"},\"3\":{\"color\":\"#0086c0\",\"border\":\"#3DB0DF\",\"var_name\":\"blue-links\"},\"5\":{\"color\":\"#c4c4c4\",\"border\":\"#B0B0B0\",\"var_name\":\"grey\"}}}",
+                                                            "selectType": "label2index"
+                                                        }
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 1800
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "New leads  ::  private"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Contacts"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "item_ids": {
+                                                                                "mode": "edit"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Lead Status"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "label": {
+                                                                                "mode": "chose",
+                                                                                "label": "Qualified"
+                                                                            },
+                                                                            "selectType": {
+                                                                                "mode": "chose",
+                                                                                "label": "Label"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Column Values to Change",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 44,
+                                            "module": "monday:ChangeMultipleColumnValues",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "filter": {
+                                                "name": "",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{4.mappable_column_values.link_to_new_leads.linkedPulseIds[].linkedPulseId}}",
+                                                            "o": "notexist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{4.id}}",
+                                                "boardId": "2724672341",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "status87",
+                                                        "columnValue": {
+                                                            "label": "Move",
+                                                            "settings": "{\"labels\":{\"0\":\"Move\",\"1\":\"Done\"},\"labels_colors\":{\"0\":{\"color\":\"#fdab3d\",\"border\":\"#E99729\",\"var_name\":\"orange\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00B461\",\"var_name\":\"green-shadow\"}}}",
+                                                            "selectType": "label2index"
+                                                        }
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1800,
+                                                    "y": 1800,
+                                                    "name": "move to sales"
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "New leads  ::  private"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Move to contacts tec"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "label": {
+                                                                                "mode": "chose",
+                                                                                "label": "Move"
+                                                                            },
+                                                                            "selectType": {
+                                                                                "mode": "chose",
+                                                                                "label": "Label"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Column Values to Change",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 43,
+                                            "module": "monday:ChangeMultipleColumnValues",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "filter": {
+                                                "name": "",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{4.mappable_column_values.connect_boards.linkedPulseIds[].linkedPulseId}}",
+                                                            "o": "exist"
+                                                        },
+                                                        {
+                                                            "a": "{{4.mappable_column_values.link_to_new_leads.linkedPulseIds[].linkedPulseId}}",
+                                                            "o": "notexist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{4.id}}",
+                                                "boardId": "2724672341",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "status87",
+                                                        "columnValue": {
+                                                            "label": "Move",
+                                                            "settings": "{\"labels\":{\"0\":\"Move\",\"1\":\"Done\"},\"labels_colors\":{\"0\":{\"color\":\"#fdab3d\",\"border\":\"#E99729\",\"var_name\":\"orange\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00B461\",\"var_name\":\"green-shadow\"}}}",
+                                                            "selectType": "label2index"
+                                                        }
+                                                    },
+                                                    {
+                                                        "columnId": "status8",
+                                                        "columnValue": {
+                                                            "label": "Qualified",
+                                                            "settings": "{\"done_colors\":[1],\"color_mapping\":{\"0\":11,\"11\":0},\"labels\":{\"0\":\"Appointment\",\"1\":\"Contacted\",\"2\":\"Qualified\",\"3\":\"To qualify\",\"5\":\"\"},\"labels_positions_v2\":{\"0\":2,\"1\":1,\"2\":3,\"3\":4,\"5\":0},\"labels_colors\":{\"0\":{\"color\":\"#BB3354\",\"border\":\"#A42D4A\",\"var_name\":\"dark-red\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00B461\",\"var_name\":\"green-shadow\"},\"2\":{\"color\":\"#e2445c\",\"border\":\"#CE3048\",\"var_name\":\"red-shadow\"},\"3\":{\"color\":\"#0086c0\",\"border\":\"#3DB0DF\",\"var_name\":\"blue-links\"},\"5\":{\"color\":\"#c4c4c4\",\"border\":\"#B0B0B0\",\"var_name\":\"grey\"}}}",
+                                                            "selectType": "label2index"
+                                                        }
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1200,
+                                                    "y": 2100,
+                                                    "name": "move to sales"
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "New leads  ::  private"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Move to contacts tec"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "label": {
+                                                                                "mode": "chose",
+                                                                                "label": "Move"
+                                                                            },
+                                                                            "selectType": {
+                                                                                "mode": "chose",
+                                                                                "label": "Label"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Lead Status"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "label": {
+                                                                                "mode": "chose",
+                                                                                "label": "Qualified"
+                                                                            },
+                                                                            "selectType": {
+                                                                                "mode": "chose",
+                                                                                "label": "Label"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Column Values to Change",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            },
+                                            "onerror": [
+                                                {
+                                                    "id": 45,
+                                                    "module": "builtin:Ignore",
+                                                    "version": 1,
+                                                    "metadata": {
+                                                        "designer": {
+                                                            "x": 1500,
+                                                            "y": 2100
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false
+        },
+        "designer": {
+            "orphans": [],
+            "notes": [
+                {
+                    "id": 1,
+                    "text": "",
+                    "filter": false
+                }
+            ]
+        },
+        "zone": "us1.make.com"
+    }
+}

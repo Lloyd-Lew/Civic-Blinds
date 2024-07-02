@@ -1,0 +1,2289 @@
+{
+    "name": "Create Quote in Ninja",
+    "flow": [
+        {
+            "id": 1,
+            "module": "monday:watchEventsInstant",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 1197680
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 150
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "Create Quote"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:monday",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "module": "monday:GetItem",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 2156737
+            },
+            "mapper": {
+                "id": "{{1.event.pulseId}}",
+                "boardId": "4842306128",
+                "showSubitems": true,
+                "showParentItem": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 150
+                },
+                "restore": {
+                    "expect": {
+                        "boardId": {
+                            "label": "Pipeline  ::  share"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "monday"
+                            },
+                            "label": "My Monday v2 connection New"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:monday",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showParentItem",
+                        "type": "boolean",
+                        "label": "Show Parent Item",
+                        "required": true
+                    },
+                    {
+                        "name": "showSubitems",
+                        "type": "boolean",
+                        "label": "Show Subitems",
+                        "required": true
+                    },
+                    {
+                        "name": "boardId",
+                        "type": "select",
+                        "label": "Board ID"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name"
+                    },
+                    {
+                        "name": "email",
+                        "type": "email",
+                        "label": "Email"
+                    },
+                    {
+                        "name": "created_at",
+                        "type": "date",
+                        "label": "Created at"
+                    },
+                    {
+                        "name": "updated_at",
+                        "type": "date",
+                        "label": "Updated at"
+                    },
+                    {
+                        "name": "state",
+                        "type": "text",
+                        "label": "State"
+                    },
+                    {
+                        "name": "board",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Board"
+                    },
+                    {
+                        "name": "creator_id",
+                        "type": "uinteger",
+                        "label": "Creator ID"
+                    },
+                    {
+                        "name": "group",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Title"
+                            },
+                            {
+                                "name": "deleted",
+                                "type": "boolean",
+                                "label": "Deleted"
+                            },
+                            {
+                                "name": "archived",
+                                "type": "boolean",
+                                "label": "Archived"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Group"
+                    },
+                    {
+                        "name": "column_values",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Title"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            },
+                            {
+                                "name": "additional_info",
+                                "type": "text",
+                                "label": "Additional Info"
+                            },
+                            {
+                                "name": "text",
+                                "type": "text",
+                                "label": "Text"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Column Values"
+                    },
+                    {
+                        "name": "mappable_column_values",
+                        "spec": [
+                            {
+                                "name": "sale_person",
+                                "spec": [
+                                    {
+                                        "name": "personsAndTeams",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "kind",
+                                                "type": "text",
+                                                "label": "Kind"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Persons and Teams"
+                                    },
+                                    {
+                                        "name": "changed_at",
+                                        "type": "date",
+                                        "label": "Changed at"
+                                    },
+                                    {
+                                        "name": "additonal_info",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Label"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Aditional info"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Sale Person"
+                            },
+                            {
+                                "name": "admin",
+                                "spec": [
+                                    {
+                                        "name": "personsAndTeams",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "kind",
+                                                "type": "text",
+                                                "label": "Kind"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Persons and Teams"
+                                    },
+                                    {
+                                        "name": "changed_at",
+                                        "type": "date",
+                                        "label": "Changed at"
+                                    },
+                                    {
+                                        "name": "additonal_info",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Label"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Aditional info"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Admin"
+                            },
+                            {
+                                "name": "bdm",
+                                "spec": [
+                                    {
+                                        "name": "personsAndTeams",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "kind",
+                                                "type": "text",
+                                                "label": "Kind"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Persons and Teams"
+                                    },
+                                    {
+                                        "name": "changed_at",
+                                        "type": "date",
+                                        "label": "Changed at"
+                                    },
+                                    {
+                                        "name": "additonal_info",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Label"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Aditional info"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "BDM"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Mappable column values"
+                    },
+                    {
+                        "name": "assets",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "public_url",
+                                "type": "url",
+                                "label": "Public URL"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            },
+                            {
+                                "name": "file_extension",
+                                "type": "text",
+                                "label": "File Extension"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Assets"
+                    },
+                    {
+                        "name": "parent_item",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "created_at",
+                                "type": "date",
+                                "label": "Created at"
+                            },
+                            {
+                                "name": "updated_at",
+                                "type": "date",
+                                "label": "Updated at"
+                            },
+                            {
+                                "name": "state",
+                                "type": "text",
+                                "label": "State"
+                            },
+                            {
+                                "name": "board",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Board"
+                            },
+                            {
+                                "name": "creator_id",
+                                "type": "uinteger",
+                                "label": "Creator ID"
+                            },
+                            {
+                                "name": "group",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Group"
+                            },
+                            {
+                                "name": "column_values",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "title",
+                                        "type": "text",
+                                        "label": "Title"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "additional_info",
+                                        "type": "text",
+                                        "label": "Additional Info"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "array",
+                                "label": "Column Values"
+                            },
+                            {
+                                "name": "mappable_column_values",
+                                "spec": [],
+                                "type": "collection",
+                                "label": "Mappable column values"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Parent Item"
+                    },
+                    {
+                        "name": "subitems",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "created_at",
+                                "type": "date",
+                                "label": "Created at"
+                            },
+                            {
+                                "name": "updated_at",
+                                "type": "date",
+                                "label": "Updated at"
+                            },
+                            {
+                                "name": "state",
+                                "type": "text",
+                                "label": "State"
+                            },
+                            {
+                                "name": "board",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Board"
+                            },
+                            {
+                                "name": "creator_id",
+                                "type": "uinteger",
+                                "label": "Creator ID"
+                            },
+                            {
+                                "name": "group",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Group"
+                            },
+                            {
+                                "name": "column_values",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "title",
+                                        "type": "text",
+                                        "label": "Title"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "additional_info",
+                                        "type": "text",
+                                        "label": "Additional Info"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "array",
+                                "label": "Column Values"
+                            },
+                            {
+                                "name": "mappable_column_values",
+                                "spec": [],
+                                "type": "collection",
+                                "label": "Mappable column values"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Subitems"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 8,
+            "module": "builtin:BasicFeeder",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "array": "{{3.subitems}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 150
+                },
+                "restore": {
+                    "expect": {
+                        "array": {
+                            "mode": "edit"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "mode": "edit",
+                        "name": "array",
+                        "spec": [],
+                        "type": "array",
+                        "label": "Array"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 11,
+            "module": "builtin:BasicAggregator",
+            "version": 1,
+            "parameters": {
+                "feeder": 8,
+                "target": "2.line_items"
+            },
+            "filter": {
+                "name": "Line item Product and Quantity Available",
+                "conditions": [
+                    [
+                        {
+                            "a": "{{8.mappable_column_values.connect_boards.text}}",
+                            "o": "exist"
+                        },
+                        {
+                            "a": "{{8.mappable_column_values.numbers0}}",
+                            "o": "exist"
+                        }
+                    ]
+                ]
+            },
+            "mapper": {
+                "cost": "{{8.mappable_column_values.dup__of_product_id}}",
+                "date": "",
+                "notes": "{{8.mappable_column_values.dup__of_tax_rate_2}}",
+                "type_id": "1",
+                "discount": "",
+                "quantity": "{{8.mappable_column_values.numbers0}}",
+                "tax_name1": "{{8.mappable_column_values.dup__of_price}}",
+                "tax_name2": "{{8.mappable_column_values.dup__of_tax_name_1}}",
+                "tax_name3": "",
+                "tax_rate1": "{{8.mappable_column_values.mirror_1}}",
+                "tax_rate2": "{{8.mappable_column_values.dup__of_tax_name_2}}",
+                "tax_rate3": "",
+                "line_total": "{{8.mappable_column_values.numbers0 * 8.mappable_column_values.dup__of_product_id}}",
+                "product_key": "{{8.mappable_column_values.connect_boards.text}}",
+                "custom_value1": "",
+                "custom_value2": "",
+                "custom_value3": "",
+                "custom_value4": ""
+            },
+            "metadata": {
+                "designer": {
+                    "x": 900,
+                    "y": 150
+                },
+                "restore": {
+                    "extra": {
+                        "feeder": {
+                            "label": "Iterator [8]"
+                        },
+                        "target": {
+                            "label": "Line Items"
+                        }
+                    },
+                    "expect": {
+                        "__IMTTARGET__": {
+                            "nested": {
+                                "type_id": {
+                                    "mode": "chose",
+                                    "label": "Product"
+                                }
+                            }
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "product_key",
+                        "type": "text",
+                        "label": "Product Key"
+                    },
+                    {
+                        "name": "quantity",
+                        "type": "number",
+                        "label": "Quantity"
+                    },
+                    {
+                        "name": "cost",
+                        "type": "number",
+                        "label": "Cost"
+                    },
+                    {
+                        "name": "notes",
+                        "type": "text",
+                        "label": "Notes"
+                    },
+                    {
+                        "name": "discount",
+                        "type": "number",
+                        "label": "Discount"
+                    },
+                    {
+                        "name": "tax_name1",
+                        "type": "text",
+                        "label": "Tax Name 1"
+                    },
+                    {
+                        "name": "tax_rate1",
+                        "type": "number",
+                        "label": "Tax Rate 1"
+                    },
+                    {
+                        "name": "tax_name2",
+                        "type": "text",
+                        "label": "Tax Name 2"
+                    },
+                    {
+                        "name": "tax_rate2",
+                        "type": "number",
+                        "label": "Tax Rate 2"
+                    },
+                    {
+                        "name": "tax_name3",
+                        "type": "text",
+                        "label": "Tax Name 3"
+                    },
+                    {
+                        "name": "tax_rate3",
+                        "type": "number",
+                        "label": "Tax Rate 3"
+                    },
+                    {
+                        "name": "custom_value1",
+                        "type": "text",
+                        "label": "Custom Value 1"
+                    },
+                    {
+                        "name": "custom_value2",
+                        "type": "text",
+                        "label": "Custom Value 2"
+                    },
+                    {
+                        "name": "custom_value3",
+                        "type": "text",
+                        "label": "Custom Value 3"
+                    },
+                    {
+                        "name": "custom_value4",
+                        "type": "text",
+                        "label": "Custom Value 4"
+                    },
+                    {
+                        "name": "type_id",
+                        "type": "select",
+                        "label": "Type ID",
+                        "validate": {
+                            "enum": [
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "line_total",
+                        "type": "number",
+                        "label": "Line Total"
+                    },
+                    {
+                        "name": "date",
+                        "type": "date",
+                        "label": "Date"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 17,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 1200,
+                    "y": 150
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 15,
+                            "module": "invoiceninja:updateQuote",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 417758
+                            },
+                            "filter": {
+                                "name": "Update Quote",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{3.mappable_column_values.text10}}",
+                                            "o": "exist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "date": "{{now}}",
+                                "quoteId": "{{3.mappable_column_values.text10}}",
+                                "client_id": "6dBBwYMNd7",
+                                "design_id": "4openRe7Az",
+                                "line_items": "{{11.array}}",
+                                "custom_value3": "Motorized",
+                                "custom_value4": "Left",
+                                "assigned_user_id": "APdRrxEdGy",
+                                "is_amount_discount": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 0
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "quoteId": {
+                                            "mode": "edit"
+                                        },
+                                        "client_id": {
+                                            "mode": "chose",
+                                            "label": "Dear Test Contact"
+                                        },
+                                        "design_id": {
+                                            "mode": "chose",
+                                            "label": "Business"
+                                        },
+                                        "line_items": {
+                                            "mode": "edit"
+                                        },
+                                        "project_id": {
+                                            "mode": "edit"
+                                        },
+                                        "assigned_user_id": {
+                                            "mode": "chose",
+                                            "label": "mike@civicblinds.com"
+                                        },
+                                        "is_amount_discount": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "invoiceninja2"
+                                            },
+                                            "label": "My Invoice Ninja connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:invoiceninja2",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "mode": "edit",
+                                        "name": "quoteId",
+                                        "type": "select",
+                                        "label": "Quote ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "mode": "edit",
+                                        "name": "client_id",
+                                        "type": "select",
+                                        "label": "Client ID"
+                                    },
+                                    {
+                                        "name": "date",
+                                        "type": "date",
+                                        "label": "Date"
+                                    },
+                                    {
+                                        "name": "due_date",
+                                        "type": "date",
+                                        "label": "Due Date"
+                                    },
+                                    {
+                                        "name": "number",
+                                        "type": "text",
+                                        "label": "Number"
+                                    },
+                                    {
+                                        "name": "po_number",
+                                        "type": "text",
+                                        "label": "PO Number"
+                                    },
+                                    {
+                                        "name": "discount",
+                                        "type": "number",
+                                        "label": "Discount"
+                                    },
+                                    {
+                                        "name": "terms",
+                                        "type": "text",
+                                        "label": "Terms"
+                                    },
+                                    {
+                                        "name": "public_notes",
+                                        "type": "text",
+                                        "label": "Public Notes"
+                                    },
+                                    {
+                                        "name": "private_notes",
+                                        "type": "text",
+                                        "label": "Private Notes"
+                                    },
+                                    {
+                                        "name": "footer",
+                                        "type": "text",
+                                        "label": "Footer"
+                                    },
+                                    {
+                                        "mode": "edit",
+                                        "name": "project_id",
+                                        "type": "select",
+                                        "label": "Project ID"
+                                    },
+                                    {
+                                        "name": "tax_name1",
+                                        "type": "text",
+                                        "label": "Tax Name 1"
+                                    },
+                                    {
+                                        "name": "tax_rate1",
+                                        "type": "number",
+                                        "label": "Tax Rate 1"
+                                    },
+                                    {
+                                        "name": "tax_name2",
+                                        "type": "text",
+                                        "label": "Tax Name 2"
+                                    },
+                                    {
+                                        "name": "tax_rate2",
+                                        "type": "number",
+                                        "label": "Tax Rate 2"
+                                    },
+                                    {
+                                        "name": "tax_name3",
+                                        "type": "text",
+                                        "label": "Tax Name 3"
+                                    },
+                                    {
+                                        "name": "tax_rate3",
+                                        "type": "number",
+                                        "label": "Tax Rate 3"
+                                    },
+                                    {
+                                        "name": "custom_surcharge1",
+                                        "type": "number",
+                                        "label": "Custom Surcharge 1"
+                                    },
+                                    {
+                                        "name": "custom_surcharge2",
+                                        "type": "number",
+                                        "label": "Custom Surcharge 2"
+                                    },
+                                    {
+                                        "name": "custom_surcharge3",
+                                        "type": "number",
+                                        "label": "Custom Surcharge 3"
+                                    },
+                                    {
+                                        "name": "custom_surcharge4",
+                                        "type": "number",
+                                        "label": "Custom Surcharge 4"
+                                    },
+                                    {
+                                        "name": "is_amount_discount",
+                                        "type": "boolean",
+                                        "label": "Is Amount Discount"
+                                    },
+                                    {
+                                        "name": "partial",
+                                        "type": "number",
+                                        "label": "Partial"
+                                    },
+                                    {
+                                        "name": "partial_due_date",
+                                        "type": "date",
+                                        "label": "Partial Due Date"
+                                    },
+                                    {
+                                        "name": "custom_value1",
+                                        "type": "text",
+                                        "label": "Custom Value 1"
+                                    },
+                                    {
+                                        "name": "custom_value2",
+                                        "type": "text",
+                                        "label": "Custom Value 2"
+                                    },
+                                    {
+                                        "name": "custom_value3",
+                                        "type": "text",
+                                        "label": "Custom Value 3"
+                                    },
+                                    {
+                                        "name": "custom_value4",
+                                        "type": "text",
+                                        "label": "Custom Value 4"
+                                    },
+                                    {
+                                        "name": "line_items",
+                                        "spec": [
+                                            {
+                                                "name": "product_key",
+                                                "type": "text",
+                                                "label": "Product Key"
+                                            },
+                                            {
+                                                "name": "quantity",
+                                                "type": "number",
+                                                "label": "Quantity"
+                                            },
+                                            {
+                                                "name": "cost",
+                                                "type": "number",
+                                                "label": "Cost"
+                                            },
+                                            {
+                                                "name": "notes",
+                                                "type": "text",
+                                                "label": "Notes"
+                                            },
+                                            {
+                                                "name": "discount",
+                                                "type": "number",
+                                                "label": "Discount"
+                                            },
+                                            {
+                                                "name": "tax_name1",
+                                                "type": "text",
+                                                "label": "Tax Name 1"
+                                            },
+                                            {
+                                                "name": "tax_rate1",
+                                                "type": "number",
+                                                "label": "Tax Rate 1"
+                                            },
+                                            {
+                                                "name": "tax_name2",
+                                                "type": "text",
+                                                "label": "Tax Name 2"
+                                            },
+                                            {
+                                                "name": "tax_rate2",
+                                                "type": "number",
+                                                "label": "Tax Rate 2"
+                                            },
+                                            {
+                                                "name": "tax_name3",
+                                                "type": "text",
+                                                "label": "Tax Name 3"
+                                            },
+                                            {
+                                                "name": "tax_rate3",
+                                                "type": "number",
+                                                "label": "Tax Rate 3"
+                                            },
+                                            {
+                                                "name": "custom_value1",
+                                                "type": "text",
+                                                "label": "Custom Value 1"
+                                            },
+                                            {
+                                                "name": "custom_value2",
+                                                "type": "text",
+                                                "label": "Custom Value 2"
+                                            },
+                                            {
+                                                "name": "custom_value3",
+                                                "type": "text",
+                                                "label": "Custom Value 3"
+                                            },
+                                            {
+                                                "name": "custom_value4",
+                                                "type": "text",
+                                                "label": "Custom Value 4"
+                                            },
+                                            {
+                                                "name": "type_id",
+                                                "type": "select",
+                                                "label": "Type ID",
+                                                "options": [
+                                                    {
+                                                        "label": "Product",
+                                                        "value": "1"
+                                                    },
+                                                    {
+                                                        "label": "Service",
+                                                        "value": "2"
+                                                    },
+                                                    {
+                                                        "label": "Unpaid Gateway Fee",
+                                                        "value": "3"
+                                                    },
+                                                    {
+                                                        "label": "Paid Gateway Fee",
+                                                        "value": "4"
+                                                    },
+                                                    {
+                                                        "label": "Late Fee",
+                                                        "value": "5"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "name": "line_total",
+                                                "type": "number",
+                                                "label": "Line Total"
+                                            },
+                                            {
+                                                "name": "date",
+                                                "type": "date",
+                                                "label": "Date"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Line Items"
+                                    },
+                                    {
+                                        "mode": "edit",
+                                        "name": "design_id",
+                                        "type": "select",
+                                        "label": "Design ID"
+                                    },
+                                    {
+                                        "mode": "edit",
+                                        "name": "assigned_user_id",
+                                        "type": "select",
+                                        "label": "Assigned User ID"
+                                    },
+                                    {
+                                        "name": "exchange_rate",
+                                        "type": "number",
+                                        "label": "Exchange Rate"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 18,
+                            "module": "invoiceninja:makeApiCall",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 417758
+                            },
+                            "mapper": {
+                                "url": "/v1/quote/{{15.invitations[].key}}/download",
+                                "method": "GET",
+                                "headers": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ]
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1800,
+                                    "y": 0
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "qs": {
+                                            "mode": "chose"
+                                        },
+                                        "method": {
+                                            "mode": "chose",
+                                            "label": "GET"
+                                        },
+                                        "headers": {
+                                            "mode": "chose",
+                                            "items": [
+                                                null
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "invoiceninja2"
+                                            },
+                                            "label": "My Invoice Ninja connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:invoiceninja2",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "url",
+                                        "type": "text",
+                                        "label": "URL",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "method",
+                                        "type": "select",
+                                        "label": "Method",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "GET",
+                                                "POST",
+                                                "PUT",
+                                                "PATCH",
+                                                "DELETE"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "headers",
+                                        "spec": [
+                                            {
+                                                "name": "key",
+                                                "type": "text",
+                                                "label": "Key"
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Headers"
+                                    },
+                                    {
+                                        "name": "qs",
+                                        "spec": [
+                                            {
+                                                "name": "key",
+                                                "type": "text",
+                                                "label": "Key"
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Query String"
+                                    },
+                                    {
+                                        "name": "body",
+                                        "type": "any",
+                                        "label": "Body"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 20,
+                            "module": "monday:ChangeMultipleColumnValues",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 2156737
+                            },
+                            "mapper": {
+                                "itemId": "{{3.id}}",
+                                "boardId": "4842306128",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "files8",
+                                        "columnValue": {
+                                            "clear_all": true
+                                        }
+                                    },
+                                    {
+                                        "columnId": "status937",
+                                        "columnValue": {
+                                            "label": "Quote Created",
+                                            "settings": "{\"done_colors\":[1],\"labels\":{\"0\":\"Working on it\",\"1\":\"Done\",\"2\":\"Stuck\",\"5\":\"Auotmated\"},\"labels_colors\":{\"0\":{\"color\":\"#fdab3d\",\"border\":\"#e99729\",\"var_name\":\"orange\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00b461\",\"var_name\":\"green-shadow\"},\"2\":{\"color\":\"#df2f4a\",\"border\":\"#ce3048\",\"var_name\":\"red-shadow\"},\"5\":{\"color\":\"#c4c4c4\",\"border\":\"#b0b0b0\",\"var_name\":\"grey\"}}}",
+                                            "selectType": "label2index"
+                                        }
+                                    }
+                                ],
+                                "create_labels_if_missing": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2100,
+                                    "y": 0
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "itemId": {
+                                            "mode": "edit"
+                                        },
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "Pipeline  ::  share"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Quotes"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "clear_all": {
+                                                                "mode": "chose"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Ninja Quote Status"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "label": {
+                                                                "mode": "chose",
+                                                                "label": "Quote Created"
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection New"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "itemId",
+                                        "type": "select",
+                                        "label": "Item ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Column Values to Change",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 19,
+                            "module": "monday:AddFileToFileColumnValue",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 2156737
+                            },
+                            "mapper": {
+                                "data": "{{18.body}}",
+                                "itemId": "{{3.id}}",
+                                "boardId": "4842306128",
+                                "columnId": "files8",
+                                "filename": "Quote.pdf"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2400,
+                                    "y": 0
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "itemId": {
+                                            "mode": "edit"
+                                        },
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "Pipeline  ::  share"
+                                        },
+                                        "columnId": {
+                                            "mode": "chose",
+                                            "label": "Quotes"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection New"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "filename",
+                                        "type": "text",
+                                        "label": "Filename",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "data",
+                                        "type": "buffer",
+                                        "label": "Data",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "itemId",
+                                        "type": "select",
+                                        "label": "Item ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "columnId",
+                                        "type": "select",
+                                        "label": "Column ID",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 2,
+                            "module": "invoiceninja:createQuote",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 417758
+                            },
+                            "filter": {
+                                "name": "New quote",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{3.mappable_column_values.text10}}",
+                                            "o": "notexist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "date": "{{now}}",
+                                "terms": "termstest",
+                                "footer": "footer test",
+                                "partial": "200",
+                                "discount": "5",
+                                "due_date": "{{addDays(now; 30)}}",
+                                "client_id": "6dBBwYMNd7",
+                                "design_id": "4openRe7Az",
+                                "po_number": "POtest",
+                                "tax_name1": "taxname1 test",
+                                "tax_name2": "taxname2 test",
+                                "tax_name3": "taxname3 test",
+                                "tax_rate1": "0.5",
+                                "tax_rate2": "1.5",
+                                "tax_rate3": "2.5",
+                                "line_items": "{{11.array}}",
+                                "project_id": "project id test",
+                                "public_notes": "public notes test",
+                                "custom_value1": "cust 1",
+                                "custom_value2": "cust 2",
+                                "custom_value3": "cust 3",
+                                "custom_value4": "cust 4",
+                                "private_notes": "private notes test",
+                                "assigned_user_id": "APdRrxEdGy",
+                                "partial_due_date": "{{addMonths(now; 5)}}",
+                                "custom_surcharge1": "3.5",
+                                "custom_surcharge2": "4.5",
+                                "custom_surcharge3": "5.5",
+                                "custom_surcharge4": "6.5",
+                                "is_amount_discount": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 300
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "client_id": {
+                                            "mode": "chose",
+                                            "label": "Dear Test Contact"
+                                        },
+                                        "design_id": {
+                                            "mode": "chose",
+                                            "label": "Business"
+                                        },
+                                        "line_items": {
+                                            "mode": "edit"
+                                        },
+                                        "project_id": {
+                                            "mode": "edit"
+                                        },
+                                        "assigned_user_id": {
+                                            "mode": "chose",
+                                            "label": "mike@civicblinds.com"
+                                        },
+                                        "is_amount_discount": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "invoiceninja2"
+                                            },
+                                            "label": "My Invoice Ninja connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:invoiceninja2",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "client_id",
+                                        "type": "select",
+                                        "label": "Client ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "date",
+                                        "type": "date",
+                                        "label": "Date"
+                                    },
+                                    {
+                                        "name": "due_date",
+                                        "type": "date",
+                                        "label": "Due Date"
+                                    },
+                                    {
+                                        "name": "number",
+                                        "type": "text",
+                                        "label": "Number"
+                                    },
+                                    {
+                                        "name": "po_number",
+                                        "type": "text",
+                                        "label": "PO Number"
+                                    },
+                                    {
+                                        "name": "discount",
+                                        "type": "number",
+                                        "label": "Discount"
+                                    },
+                                    {
+                                        "name": "terms",
+                                        "type": "text",
+                                        "label": "Terms"
+                                    },
+                                    {
+                                        "name": "public_notes",
+                                        "type": "text",
+                                        "label": "Public Notes"
+                                    },
+                                    {
+                                        "name": "private_notes",
+                                        "type": "text",
+                                        "label": "Private Notes"
+                                    },
+                                    {
+                                        "name": "footer",
+                                        "type": "text",
+                                        "label": "Footer"
+                                    },
+                                    {
+                                        "name": "project_id",
+                                        "type": "select",
+                                        "label": "Project ID"
+                                    },
+                                    {
+                                        "name": "tax_name1",
+                                        "type": "text",
+                                        "label": "Tax Name 1"
+                                    },
+                                    {
+                                        "name": "tax_rate1",
+                                        "type": "number",
+                                        "label": "Tax Rate 1"
+                                    },
+                                    {
+                                        "name": "tax_name2",
+                                        "type": "text",
+                                        "label": "Tax Name 2"
+                                    },
+                                    {
+                                        "name": "tax_rate2",
+                                        "type": "number",
+                                        "label": "Tax Rate 2"
+                                    },
+                                    {
+                                        "name": "tax_name3",
+                                        "type": "text",
+                                        "label": "Tax Name 3"
+                                    },
+                                    {
+                                        "name": "tax_rate3",
+                                        "type": "number",
+                                        "label": "Tax Rate 3"
+                                    },
+                                    {
+                                        "name": "custom_surcharge1",
+                                        "type": "number",
+                                        "label": "Custom Surcharge 1"
+                                    },
+                                    {
+                                        "name": "custom_surcharge2",
+                                        "type": "number",
+                                        "label": "Custom Surcharge 2"
+                                    },
+                                    {
+                                        "name": "custom_surcharge3",
+                                        "type": "number",
+                                        "label": "Custom Surcharge 3"
+                                    },
+                                    {
+                                        "name": "custom_surcharge4",
+                                        "type": "number",
+                                        "label": "Custom Surcharge 4"
+                                    },
+                                    {
+                                        "name": "is_amount_discount",
+                                        "type": "boolean",
+                                        "label": "Is Amount Discount"
+                                    },
+                                    {
+                                        "name": "partial",
+                                        "type": "number",
+                                        "label": "Partial"
+                                    },
+                                    {
+                                        "name": "partial_due_date",
+                                        "type": "date",
+                                        "label": "Partial Due Date"
+                                    },
+                                    {
+                                        "name": "custom_value1",
+                                        "type": "text",
+                                        "label": "Custom Value 1"
+                                    },
+                                    {
+                                        "name": "custom_value2",
+                                        "type": "text",
+                                        "label": "Custom Value 2"
+                                    },
+                                    {
+                                        "name": "custom_value3",
+                                        "type": "text",
+                                        "label": "Custom Value 3"
+                                    },
+                                    {
+                                        "name": "custom_value4",
+                                        "type": "text",
+                                        "label": "Custom Value 4"
+                                    },
+                                    {
+                                        "name": "line_items",
+                                        "spec": [
+                                            {
+                                                "name": "product_key",
+                                                "type": "text",
+                                                "label": "Product Key"
+                                            },
+                                            {
+                                                "name": "quantity",
+                                                "type": "number",
+                                                "label": "Quantity"
+                                            },
+                                            {
+                                                "name": "cost",
+                                                "type": "number",
+                                                "label": "Cost"
+                                            },
+                                            {
+                                                "name": "notes",
+                                                "type": "text",
+                                                "label": "Notes"
+                                            },
+                                            {
+                                                "name": "discount",
+                                                "type": "number",
+                                                "label": "Discount"
+                                            },
+                                            {
+                                                "name": "tax_name1",
+                                                "type": "text",
+                                                "label": "Tax Name 1"
+                                            },
+                                            {
+                                                "name": "tax_rate1",
+                                                "type": "number",
+                                                "label": "Tax Rate 1"
+                                            },
+                                            {
+                                                "name": "tax_name2",
+                                                "type": "text",
+                                                "label": "Tax Name 2"
+                                            },
+                                            {
+                                                "name": "tax_rate2",
+                                                "type": "number",
+                                                "label": "Tax Rate 2"
+                                            },
+                                            {
+                                                "name": "tax_name3",
+                                                "type": "text",
+                                                "label": "Tax Name 3"
+                                            },
+                                            {
+                                                "name": "tax_rate3",
+                                                "type": "number",
+                                                "label": "Tax Rate 3"
+                                            },
+                                            {
+                                                "name": "custom_value1",
+                                                "type": "text",
+                                                "label": "Custom Value 1"
+                                            },
+                                            {
+                                                "name": "custom_value2",
+                                                "type": "text",
+                                                "label": "Custom Value 2"
+                                            },
+                                            {
+                                                "name": "custom_value3",
+                                                "type": "text",
+                                                "label": "Custom Value 3"
+                                            },
+                                            {
+                                                "name": "custom_value4",
+                                                "type": "text",
+                                                "label": "Custom Value 4"
+                                            },
+                                            {
+                                                "name": "type_id",
+                                                "type": "select",
+                                                "label": "Type ID",
+                                                "options": [
+                                                    {
+                                                        "label": "Product",
+                                                        "value": "1"
+                                                    },
+                                                    {
+                                                        "label": "Service",
+                                                        "value": "2"
+                                                    },
+                                                    {
+                                                        "label": "Unpaid Gateway Fee",
+                                                        "value": "3"
+                                                    },
+                                                    {
+                                                        "label": "Paid Gateway Fee",
+                                                        "value": "4"
+                                                    },
+                                                    {
+                                                        "label": "Late Fee",
+                                                        "value": "5"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "name": "line_total",
+                                                "type": "number",
+                                                "label": "Line Total"
+                                            },
+                                            {
+                                                "name": "date",
+                                                "type": "date",
+                                                "label": "Date"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Line Items"
+                                    },
+                                    {
+                                        "name": "design_id",
+                                        "type": "select",
+                                        "label": "Design ID"
+                                    },
+                                    {
+                                        "name": "assigned_user_id",
+                                        "type": "select",
+                                        "label": "Assigned User ID"
+                                    },
+                                    {
+                                        "name": "exchange_rate",
+                                        "type": "number",
+                                        "label": "Exchange Rate"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 12,
+                            "module": "invoiceninja:makeApiCall",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 417758
+                            },
+                            "mapper": {
+                                "url": "/v1/quote/{{2.invitations[].key}}/download",
+                                "method": "GET",
+                                "headers": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ]
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1800,
+                                    "y": 300
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "qs": {
+                                            "mode": "chose"
+                                        },
+                                        "method": {
+                                            "mode": "chose",
+                                            "label": "GET"
+                                        },
+                                        "headers": {
+                                            "mode": "chose",
+                                            "items": [
+                                                null
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "invoiceninja2"
+                                            },
+                                            "label": "My Invoice Ninja connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:invoiceninja2",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "url",
+                                        "type": "text",
+                                        "label": "URL",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "method",
+                                        "type": "select",
+                                        "label": "Method",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "GET",
+                                                "POST",
+                                                "PUT",
+                                                "PATCH",
+                                                "DELETE"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "headers",
+                                        "spec": [
+                                            {
+                                                "name": "key",
+                                                "type": "text",
+                                                "label": "Key"
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Headers"
+                                    },
+                                    {
+                                        "name": "qs",
+                                        "spec": [
+                                            {
+                                                "name": "key",
+                                                "type": "text",
+                                                "label": "Key"
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Query String"
+                                    },
+                                    {
+                                        "name": "body",
+                                        "type": "any",
+                                        "label": "Body"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 21,
+                            "module": "monday:ChangeMultipleColumnValues",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 2156737
+                            },
+                            "mapper": {
+                                "itemId": "{{3.id}}",
+                                "boardId": "4842306128",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "files8",
+                                        "columnValue": {
+                                            "clear_all": true
+                                        }
+                                    },
+                                    {
+                                        "columnId": "status937",
+                                        "columnValue": {
+                                            "label": "Quote Created",
+                                            "settings": "{\"done_colors\":[1],\"labels\":{\"0\":\"Working on it\",\"1\":\"Done\",\"2\":\"Stuck\",\"5\":\"Auotmated\"},\"labels_colors\":{\"0\":{\"color\":\"#fdab3d\",\"border\":\"#e99729\",\"var_name\":\"orange\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00b461\",\"var_name\":\"green-shadow\"},\"2\":{\"color\":\"#df2f4a\",\"border\":\"#ce3048\",\"var_name\":\"red-shadow\"},\"5\":{\"color\":\"#c4c4c4\",\"border\":\"#b0b0b0\",\"var_name\":\"grey\"}}}",
+                                            "selectType": "label2index"
+                                        }
+                                    },
+                                    {
+                                        "columnId": "text10",
+                                        "columnValue": "{{2.id}}"
+                                    }
+                                ],
+                                "create_labels_if_missing": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2100,
+                                    "y": 300
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "itemId": {
+                                            "mode": "edit"
+                                        },
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "Pipeline  ::  share"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Quotes"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "clear_all": {
+                                                                "mode": "chose"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Ninja Quote Status"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "label": {
+                                                                "mode": "chose",
+                                                                "label": "Quote Created"
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Ninja Quote ID"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection New"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "itemId",
+                                        "type": "select",
+                                        "label": "Item ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Column Values to Change",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 13,
+                            "module": "monday:AddFileToFileColumnValue",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 2156737
+                            },
+                            "mapper": {
+                                "data": "{{12.body}}",
+                                "itemId": "{{3.id}}",
+                                "boardId": "4842306128",
+                                "columnId": "files8",
+                                "filename": "Quote.pdf"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2400,
+                                    "y": 300
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "itemId": {
+                                            "mode": "edit"
+                                        },
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "Pipeline  ::  share"
+                                        },
+                                        "columnId": {
+                                            "mode": "chose",
+                                            "label": "Quotes"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection New"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "filename",
+                                        "type": "text",
+                                        "label": "Filename",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "data",
+                                        "type": "buffer",
+                                        "label": "Data",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "itemId",
+                                        "type": "select",
+                                        "label": "Item ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "columnId",
+                                        "type": "select",
+                                        "label": "Column ID",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}

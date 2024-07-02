@@ -1,0 +1,163 @@
+{
+    "name": "Reminds about assignment on leads",
+    "flow": [
+        {
+            "id": 1,
+            "module": "monday:watchEventsInstant",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 301037
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": -18,
+                    "y": 25
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "Need to remind about assignment on leads"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:monday",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "monday:ExecuteGraphQLQuery",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 183282
+            },
+            "mapper": {
+                "method": "POST",
+                "queryBody": "mutation {\n    create_notification (user_id: 30675675, target_id: {{1.event.pulseId}}, text: \"Hi Mike, Please assign '{{1.event.pulseName}}' as soon as possible.\", target_type: Project) {\n        text\n    }\n}",
+                "variables": [],
+                "operationName": "",
+                "variablesDataSource": "array"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 289,
+                    "y": 27
+                },
+                "restore": {
+                    "expect": {
+                        "method": {
+                            "label": "POST (queries and mutations)"
+                        },
+                        "variables": {
+                            "mode": "chose"
+                        },
+                        "variablesDataSource": {
+                            "label": "Form"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "monday"
+                            },
+                            "label": "My Monday v2 connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:monday",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "method",
+                        "type": "select",
+                        "label": "Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "GET",
+                                "POST"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "queryBody",
+                        "type": "text",
+                        "label": "Query",
+                        "required": true
+                    },
+                    {
+                        "name": "operationName",
+                        "type": "text",
+                        "label": "Operation Name"
+                    },
+                    {
+                        "name": "variablesDataSource",
+                        "type": "select",
+                        "label": "Variables Data Source",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "array",
+                                "object"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "variables",
+                        "spec": [
+                            {
+                                "name": "key",
+                                "type": "text",
+                                "label": "Key"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Variables"
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}

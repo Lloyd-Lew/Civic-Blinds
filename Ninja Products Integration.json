@@ -1,0 +1,1512 @@
+{
+    "name": "Ninja Products Integration",
+    "flow": [
+        {
+            "id": 5,
+            "module": "gateway:CustomWebHook",
+            "version": 1,
+            "parameters": {
+                "hook": 1189002,
+                "maxResults": 1
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 450
+                },
+                "restore": {
+                    "parameters": {
+                        "hook": {
+                            "data": {
+                                "editable": "true"
+                            },
+                            "label": "Ninja Products"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "hook",
+                        "type": "hook:gateway-webhook",
+                        "label": "Webhook",
+                        "required": true
+                    },
+                    {
+                        "name": "maxResults",
+                        "type": "number",
+                        "label": "Maximum number of results"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "id",
+                        "type": "text"
+                    },
+                    {
+                        "name": "user_id",
+                        "type": "text"
+                    },
+                    {
+                        "name": "assigned_user_id",
+                        "type": "text"
+                    },
+                    {
+                        "name": "product_key",
+                        "type": "text"
+                    },
+                    {
+                        "name": "notes",
+                        "type": "text"
+                    },
+                    {
+                        "name": "cost",
+                        "type": "number"
+                    },
+                    {
+                        "name": "price",
+                        "type": "number"
+                    },
+                    {
+                        "name": "quantity",
+                        "type": "number"
+                    },
+                    {
+                        "name": "tax_name1",
+                        "type": "text"
+                    },
+                    {
+                        "name": "tax_rate1",
+                        "type": "number"
+                    },
+                    {
+                        "name": "tax_name2",
+                        "type": "text"
+                    },
+                    {
+                        "name": "tax_rate2",
+                        "type": "number"
+                    },
+                    {
+                        "name": "tax_name3",
+                        "type": "text"
+                    },
+                    {
+                        "name": "tax_rate3",
+                        "type": "number"
+                    },
+                    {
+                        "name": "created_at",
+                        "type": "number"
+                    },
+                    {
+                        "name": "updated_at",
+                        "type": "number"
+                    },
+                    {
+                        "name": "archived_at",
+                        "type": "number"
+                    },
+                    {
+                        "name": "custom_value1",
+                        "type": "text"
+                    },
+                    {
+                        "name": "custom_value2",
+                        "type": "text"
+                    },
+                    {
+                        "name": "custom_value3",
+                        "type": "text"
+                    },
+                    {
+                        "name": "custom_value4",
+                        "type": "text"
+                    },
+                    {
+                        "name": "is_deleted",
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "in_stock_quantity",
+                        "type": "number"
+                    },
+                    {
+                        "name": "stock_notification",
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "stock_notification_threshold",
+                        "type": "number"
+                    },
+                    {
+                        "name": "max_quantity",
+                        "type": "number"
+                    },
+                    {
+                        "name": "product_image",
+                        "type": "text"
+                    },
+                    {
+                        "name": "tax_id",
+                        "type": "text"
+                    },
+                    {
+                        "name": "documents",
+                        "type": "array"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 6,
+            "module": "monday:ListItemsByColumnValues",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 2156737
+            },
+            "filter": {
+                "name": "",
+                "conditions": [
+                    [
+                        {
+                            "a": "{{5.id}}",
+                            "o": "exist"
+                        }
+                    ]
+                ]
+            },
+            "mapper": {
+                "limit": "10",
+                "boardId": "6091074493",
+                "columnId": "text6",
+                "startPage": "",
+                "columnValue": "{{5.id}}",
+                "showParentID": false,
+                "showSubitemsID": false,
+                "filterToGetColumnValues": []
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 450
+                },
+                "restore": {
+                    "expect": {
+                        "boardId": {
+                            "mode": "chose",
+                            "label": "Products & Services  ::  private"
+                        },
+                        "columnId": {
+                            "mode": "chose",
+                            "label": "Product ID (Ninja)"
+                        },
+                        "filterToGetColumnValues": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "monday"
+                            },
+                            "label": "My Monday v2 connection New"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:monday",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "limit",
+                        "type": "uinteger",
+                        "label": "Limit",
+                        "required": true
+                    },
+                    {
+                        "name": "boardId",
+                        "type": "select",
+                        "label": "Board ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showParentID",
+                        "type": "boolean",
+                        "label": "Show Parent ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showSubitemsID",
+                        "type": "boolean",
+                        "label": "Show Subitems ID",
+                        "required": true
+                    },
+                    {
+                        "name": "startPage",
+                        "type": "uinteger",
+                        "label": "Start Page"
+                    },
+                    {
+                        "name": "columnId",
+                        "type": "select",
+                        "label": "Column ID to Search the Value",
+                        "required": true
+                    },
+                    {
+                        "name": "filterToGetColumnValues",
+                        "spec": {
+                            "name": "value",
+                            "type": "select",
+                            "label": "Column ID",
+                            "dynamic": true,
+                            "options": [],
+                            "required": true
+                        },
+                        "type": "array",
+                        "label": "Output Column Values"
+                    },
+                    {
+                        "name": "columnValue",
+                        "type": "text",
+                        "label": "Column Value",
+                        "required": true
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "__IMTLENGTH__",
+                        "type": "uinteger",
+                        "label": "Total number of bundles"
+                    },
+                    {
+                        "name": "__IMTINDEX__",
+                        "type": "uinteger",
+                        "label": "Bundle order position"
+                    },
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name"
+                    },
+                    {
+                        "name": "created_at",
+                        "type": "date",
+                        "label": "Created at"
+                    },
+                    {
+                        "name": "updated_at",
+                        "type": "date",
+                        "label": "Updated at"
+                    },
+                    {
+                        "name": "board",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Board"
+                    },
+                    {
+                        "name": "creator_id",
+                        "type": "uinteger",
+                        "label": "Creator ID"
+                    },
+                    {
+                        "name": "group",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Group"
+                    },
+                    {
+                        "name": "column_values",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            },
+                            {
+                                "name": "additional_info",
+                                "type": "text",
+                                "label": "Additional Info"
+                            },
+                            {
+                                "name": "text",
+                                "type": "text",
+                                "label": "Text"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Column Values"
+                    },
+                    {
+                        "name": "mappable_column_values",
+                        "spec": [
+                            {
+                                "name": "person",
+                                "spec": [
+                                    {
+                                        "name": "personsAndTeams",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "kind",
+                                                "type": "text",
+                                                "label": "Kind"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Persons and Teams"
+                                    },
+                                    {
+                                        "name": "changed_at",
+                                        "type": "date",
+                                        "label": "Changed at"
+                                    },
+                                    {
+                                        "name": "additonal_info",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Label"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Aditional info"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Person"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Mappable column values"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "module": "util:SetVariables",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "scope": "roundtrip",
+                "variables": [
+                    {
+                        "name": "varTaxCategory",
+                        "value": "{{add(emptyarray; switch(5.tax_id; 1; \"Physical Goods\"; 2; \"Services\"; 3; \"Digital Products\"; 4; \"Shipping\"; 5; \"Tax Exempt\"; 6; \"Reduced Tax\"; 7; \"Override Tax\"; 8; \"Zero Rated\"; 9; \"Reverse Tax\"))}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 450
+                },
+                "restore": {
+                    "expect": {
+                        "scope": {
+                            "label": "One cycle"
+                        },
+                        "variables": {
+                            "items": [
+                                null
+                            ]
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "variables",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Variable name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "any",
+                                "label": "Variable value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Variables"
+                    },
+                    {
+                        "name": "scope",
+                        "type": "select",
+                        "label": "Variable lifetime",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "roundtrip",
+                                "execution"
+                            ]
+                        }
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "varTaxCategory",
+                        "type": "any",
+                        "label": "varTaxCategory"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 7,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 900,
+                    "y": 450
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 10,
+                            "module": "builtin:BasicRouter",
+                            "version": 1,
+                            "filter": {
+                                "name": "",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{6.id}}",
+                                            "o": "exist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 300
+                                }
+                            },
+                            "routes": [
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 8,
+                                            "module": "monday:ChangeMultipleColumnValues",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 2156737
+                                            },
+                                            "filter": {
+                                                "name": "Update",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{5.archived_at}}",
+                                                            "b": "0",
+                                                            "o": "text:equal"
+                                                        },
+                                                        {
+                                                            "a": "{{5.is_deleted}}",
+                                                            "b": "false",
+                                                            "o": "text:equal"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{6.id}}",
+                                                "boardId": "6091074493",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "status_1",
+                                                        "columnValue": {
+                                                            "label": "Active",
+                                                            "settings": "{\"done_colors\":[1],\"labels\":{\"0\":\"Archived\",\"1\":\"Active\",\"2\":\"Deleted\"},\"labels_colors\":{\"0\":{\"color\":\"#fdab3d\",\"border\":\"#E99729\",\"var_name\":\"orange\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00B461\",\"var_name\":\"green-shadow\"},\"2\":{\"color\":\"#e2445c\",\"border\":\"#CE3048\",\"var_name\":\"red-shadow\"}}}",
+                                                            "selectType": "label2index"
+                                                        }
+                                                    },
+                                                    {
+                                                        "columnId": "numbers75",
+                                                        "columnValue": "{{5.quantity}}"
+                                                    },
+                                                    {
+                                                        "columnId": "text",
+                                                        "columnValue": "{{5.notes}}"
+                                                    },
+                                                    {
+                                                        "columnId": "link",
+                                                        "columnValue": {
+                                                            "url": "{{ifempty(5.product_image; emptystring; 5.product_image)}}",
+                                                            "text": "{{ifempty(5.product_image; emptystring; \"Product Link\")}}"
+                                                        }
+                                                    },
+                                                    {
+                                                        "columnId": "numbers6",
+                                                        "columnValue": "{{5.max_quantity}}"
+                                                    },
+                                                    {
+                                                        "columnId": "name",
+                                                        "columnValue": "{{5.product_key}}"
+                                                    },
+                                                    {
+                                                        "columnId": "numbers7",
+                                                        "columnValue": "{{5.price}}"
+                                                    },
+                                                    {
+                                                        "columnId": "dropdown",
+                                                        "columnValue": {
+                                                            "labels": "{{4.varTaxCategory}}",
+                                                            "settings": "{\"limit_select\":true,\"hide_footer\":false,\"labels\":[{\"id\":1,\"name\":\"Physical Goods\"},{\"id\":2,\"name\":\"Services\"},{\"id\":3,\"name\":\"Digital Products\"},{\"id\":4,\"name\":\"Shipping\"},{\"id\":5,\"name\":\"Tax Exempt\"},{\"id\":6,\"name\":\"Reduced Tax\"},{\"id\":7,\"name\":\"Override Tax\"},{\"id\":8,\"name\":\"Zero Rated\"},{\"id\":9,\"name\":\"Reverse Tax\"}],\"deactivated_labels\":[],\"label_limit_count\":1}",
+                                                            "selectType": "label2id"
+                                                        }
+                                                    },
+                                                    {
+                                                        "columnId": "text3",
+                                                        "columnValue": "{{5.tax_name1}}"
+                                                    },
+                                                    {
+                                                        "columnId": "text2",
+                                                        "columnValue": "{{5.tax_name2}}"
+                                                    },
+                                                    {
+                                                        "columnId": "dup__of_price",
+                                                        "columnValue": "{{5.tax_rate1}}"
+                                                    },
+                                                    {
+                                                        "columnId": "numbers2",
+                                                        "columnValue": "{{5.tax_rate2}}"
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 0
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Products & Services  ::  private"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Ninja Status"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "label": {
+                                                                                "mode": "chose",
+                                                                                "label": "Active"
+                                                                            },
+                                                                            "selectType": {
+                                                                                "mode": "chose",
+                                                                                "label": "Label"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Default Quantity"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Description"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Image URL"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Max Quantity"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Name"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Price"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Tax Category"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "labels": {
+                                                                                "mode": "edit"
+                                                                            },
+                                                                            "selectType": {
+                                                                                "mode": "chose",
+                                                                                "label": "Label"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Tax Name 1"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Tax Name 2"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Tax Rate 1"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Tax Rate 2"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection New"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Column Values to Change",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            },
+                                            "onerror": [
+                                                {
+                                                    "id": 16,
+                                                    "module": "builtin:Ignore",
+                                                    "version": 1,
+                                                    "metadata": {
+                                                        "designer": {
+                                                            "x": 1800,
+                                                            "y": 150
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": 14,
+                                            "module": "monday:MoveItemToGroup",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 2156737
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{8.id}}",
+                                                "boardId": "6091074493",
+                                                "groupId": "{{switch(get(4.varTaxCategory; 1); \"Services\"; \"group_title\"; \"Shipping\"; \"group_title\"; \"topics\")}}"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1800,
+                                                    "y": -150
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Products & Services  ::  private"
+                                                        },
+                                                        "groupId": {
+                                                            "mode": "edit"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection New"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "groupId",
+                                                        "type": "select",
+                                                        "label": "Group ID",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            },
+                                            "onerror": [
+                                                {
+                                                    "id": 15,
+                                                    "module": "builtin:Ignore",
+                                                    "version": 1,
+                                                    "metadata": {
+                                                        "designer": {
+                                                            "x": 2100,
+                                                            "y": 0
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 11,
+                                            "module": "monday:ChangeMultipleColumnValues",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 2156737
+                                            },
+                                            "filter": {
+                                                "name": "Delete",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{5.is_deleted}}",
+                                                            "b": "true",
+                                                            "o": "text:equal"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{6.id}}",
+                                                "boardId": "6091074493",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "status_1",
+                                                        "columnValue": {
+                                                            "label": "Deleted",
+                                                            "settings": "{\"done_colors\":[1],\"labels\":{\"0\":\"Archived\",\"1\":\"Active\",\"2\":\"Deleted\"},\"labels_colors\":{\"0\":{\"color\":\"#fdab3d\",\"border\":\"#E99729\",\"var_name\":\"orange\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00B461\",\"var_name\":\"green-shadow\"},\"2\":{\"color\":\"#e2445c\",\"border\":\"#CE3048\",\"var_name\":\"red-shadow\"}}}",
+                                                            "selectType": "label2index"
+                                                        }
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 300
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Products & Services  ::  private"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Ninja Status"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "label": {
+                                                                                "mode": "chose",
+                                                                                "label": "Deleted"
+                                                                            },
+                                                                            "selectType": {
+                                                                                "mode": "chose",
+                                                                                "label": "Label"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection New"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Column Values to Change",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            },
+                                            "onerror": [
+                                                {
+                                                    "id": 17,
+                                                    "module": "builtin:Ignore",
+                                                    "version": 1,
+                                                    "metadata": {
+                                                        "designer": {
+                                                            "x": 1800,
+                                                            "y": 300
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 12,
+                                            "module": "monday:ChangeMultipleColumnValues",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 2156737
+                                            },
+                                            "filter": {
+                                                "name": "Archive",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{5.archived_at}}",
+                                                            "b": "0",
+                                                            "o": "text:notequal"
+                                                        },
+                                                        {
+                                                            "a": "{{5.is_deleted}}",
+                                                            "b": "false",
+                                                            "o": "text:equal"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{6.id}}",
+                                                "boardId": "6091074493",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "status_1",
+                                                        "columnValue": {
+                                                            "label": "Archived",
+                                                            "settings": "{\"done_colors\":[1],\"labels\":{\"0\":\"Archived\",\"1\":\"Active\",\"2\":\"Deleted\"},\"labels_colors\":{\"0\":{\"color\":\"#fdab3d\",\"border\":\"#E99729\",\"var_name\":\"orange\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00B461\",\"var_name\":\"green-shadow\"},\"2\":{\"color\":\"#e2445c\",\"border\":\"#CE3048\",\"var_name\":\"red-shadow\"}}}",
+                                                            "selectType": "label2index"
+                                                        }
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 600
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Products & Services  ::  private"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Ninja Status"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "label": {
+                                                                                "mode": "chose",
+                                                                                "label": "Archived"
+                                                                            },
+                                                                            "selectType": {
+                                                                                "mode": "chose",
+                                                                                "label": "Label"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection New"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Column Values to Change",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            },
+                                            "onerror": [
+                                                {
+                                                    "id": 18,
+                                                    "module": "builtin:Ignore",
+                                                    "version": 1,
+                                                    "metadata": {
+                                                        "designer": {
+                                                            "x": 1800,
+                                                            "y": 600
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 2,
+                            "module": "monday:CreateItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 2156737
+                            },
+                            "filter": {
+                                "name": "Add new product",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{6.id}}",
+                                            "o": "notexist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "name": "{{5.product_key}}",
+                                "boardId": "6091074493",
+                                "groupId": "{{switch(get(4.varTaxCategory; 1); \"Services\"; \"group_title\"; \"Shipping\"; \"group_title\"; \"topics\")}}",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "status_1",
+                                        "columnValue": {
+                                            "label": "Active",
+                                            "settings": "{\"done_colors\":[1],\"labels\":{\"0\":\"Archived\",\"1\":\"Active\",\"2\":\"Deleted\"},\"labels_colors\":{\"0\":{\"color\":\"#fdab3d\",\"border\":\"#E99729\",\"var_name\":\"orange\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00B461\",\"var_name\":\"green-shadow\"},\"2\":{\"color\":\"#e2445c\",\"border\":\"#CE3048\",\"var_name\":\"red-shadow\"}}}",
+                                            "selectType": "label2index"
+                                        }
+                                    },
+                                    {
+                                        "columnId": "numbers75",
+                                        "columnValue": "{{5.quantity}}"
+                                    },
+                                    {
+                                        "columnId": "text",
+                                        "columnValue": "{{5.notes}}"
+                                    },
+                                    {
+                                        "columnId": "dropdown",
+                                        "columnValue": {
+                                            "labels": "{{4.varTaxCategory}}",
+                                            "settings": "{\"hide_footer\":false}",
+                                            "selectType": "label2id"
+                                        }
+                                    },
+                                    {
+                                        "columnId": "link",
+                                        "columnValue": {
+                                            "url": "{{ifempty(5.product_image; emptystring; 5.product_image)}}",
+                                            "text": "{{ifempty(5.product_image; emptystring; \"Product Link\")}}"
+                                        }
+                                    },
+                                    {
+                                        "columnId": "numbers6",
+                                        "columnValue": "{{5.max_quantity}}"
+                                    },
+                                    {
+                                        "columnId": "numbers7",
+                                        "columnValue": "{{5.price}}"
+                                    },
+                                    {
+                                        "columnId": "dup__of_price",
+                                        "columnValue": "{{5.tax_rate1}}"
+                                    },
+                                    {
+                                        "columnId": "text3",
+                                        "columnValue": "{{5.tax_name1}}"
+                                    },
+                                    {
+                                        "columnId": "numbers2",
+                                        "columnValue": "{{5.tax_rate2}}"
+                                    },
+                                    {
+                                        "columnId": "text2",
+                                        "columnValue": "{{5.tax_name2}}"
+                                    },
+                                    {
+                                        "columnId": "text6",
+                                        "columnValue": "{{5.id}}"
+                                    }
+                                ],
+                                "create_labels_if_missing": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 900
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "Products & Services  ::  private"
+                                        },
+                                        "groupId": {
+                                            "mode": "edit"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Ninja Status"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "label": {
+                                                                "mode": "chose",
+                                                                "label": "Active"
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Default Quantity"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Description"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Tax Category"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "labels": {
+                                                                "mode": "edit"
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Image URL"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Max Quantity"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Price"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Tax Rate 1"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Tax Name 1"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Tax Rate 2"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Tax Name 2"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Product ID (Ninja)"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection New"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Item Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "groupId",
+                                        "type": "select",
+                                        "label": "Group ID"
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Array of column values to change"
+                                    }
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 19,
+                                    "module": "builtin:Ignore",
+                                    "version": 1,
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 1500,
+                                            "y": 900
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}

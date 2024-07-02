@@ -1,0 +1,2513 @@
+{
+    "name": "Create item on Invoices from Quotes",
+    "flow": [
+        {
+            "id": 1,
+            "module": "monday:watchEventsInstant",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 274871
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 1050
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "Create item on Invoices from Quotes "
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:monday",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "monday:GetItem",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 183282
+            },
+            "mapper": {
+                "id": "{{1.event.pulseId}}",
+                "boardId": "3465531891",
+                "showSubitems": true,
+                "showParentItem": true
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 1050
+                },
+                "restore": {
+                    "expect": {
+                        "boardId": {
+                            "label": "Quotes  ::  private"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "monday"
+                            },
+                            "label": "My Monday v2 connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:monday",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showParentItem",
+                        "type": "boolean",
+                        "label": "Show Parent Item",
+                        "required": true
+                    },
+                    {
+                        "name": "showSubitems",
+                        "type": "boolean",
+                        "label": "Show Subitems",
+                        "required": true
+                    },
+                    {
+                        "name": "boardId",
+                        "type": "select",
+                        "label": "Board ID (NOT MANDATORY)"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name"
+                    },
+                    {
+                        "name": "created_at",
+                        "type": "date",
+                        "label": "Created at"
+                    },
+                    {
+                        "name": "updated_at",
+                        "type": "date",
+                        "label": "Updated at"
+                    },
+                    {
+                        "name": "state",
+                        "type": "text",
+                        "label": "State"
+                    },
+                    {
+                        "name": "board",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Board"
+                    },
+                    {
+                        "name": "creator_id",
+                        "type": "uinteger",
+                        "label": "Creator ID"
+                    },
+                    {
+                        "name": "group",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Title"
+                            },
+                            {
+                                "name": "deleted",
+                                "type": "boolean",
+                                "label": "Deleted"
+                            },
+                            {
+                                "name": "archived",
+                                "type": "boolean",
+                                "label": "Archived"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Group"
+                    },
+                    {
+                        "name": "column_values",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Title"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            },
+                            {
+                                "name": "additional_info",
+                                "type": "text",
+                                "label": "Additional Info"
+                            },
+                            {
+                                "name": "text",
+                                "type": "text",
+                                "label": "Text"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Column Values"
+                    },
+                    {
+                        "name": "mappable_column_values",
+                        "spec": [],
+                        "type": "collection",
+                        "label": "Mappable column values"
+                    },
+                    {
+                        "name": "assets",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "public_url",
+                                "type": "url",
+                                "label": "Public URL"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            },
+                            {
+                                "name": "file_extension",
+                                "type": "text",
+                                "label": "File Extension"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Assets"
+                    },
+                    {
+                        "name": "parent_item",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "created_at",
+                                "type": "date",
+                                "label": "Created at"
+                            },
+                            {
+                                "name": "updated_at",
+                                "type": "date",
+                                "label": "Updated at"
+                            },
+                            {
+                                "name": "state",
+                                "type": "text",
+                                "label": "State"
+                            },
+                            {
+                                "name": "board",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Board"
+                            },
+                            {
+                                "name": "creator_id",
+                                "type": "uinteger",
+                                "label": "Creator ID"
+                            },
+                            {
+                                "name": "group",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Group"
+                            },
+                            {
+                                "name": "column_values",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "title",
+                                        "type": "text",
+                                        "label": "Title"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "additional_info",
+                                        "type": "text",
+                                        "label": "Additional Info"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "array",
+                                "label": "Column Values"
+                            },
+                            {
+                                "name": "mappable_column_values",
+                                "spec": [],
+                                "type": "collection",
+                                "label": "Mappable column values"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Parent Item"
+                    },
+                    {
+                        "name": "subitems",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "created_at",
+                                "type": "date",
+                                "label": "Created at"
+                            },
+                            {
+                                "name": "updated_at",
+                                "type": "date",
+                                "label": "Updated at"
+                            },
+                            {
+                                "name": "state",
+                                "type": "text",
+                                "label": "State"
+                            },
+                            {
+                                "name": "board",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Board"
+                            },
+                            {
+                                "name": "creator_id",
+                                "type": "uinteger",
+                                "label": "Creator ID"
+                            },
+                            {
+                                "name": "group",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Group"
+                            },
+                            {
+                                "name": "column_values",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "title",
+                                        "type": "text",
+                                        "label": "Title"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "additional_info",
+                                        "type": "text",
+                                        "label": "Additional Info"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "array",
+                                "label": "Column Values"
+                            },
+                            {
+                                "name": "mappable_column_values",
+                                "spec": [],
+                                "type": "collection",
+                                "label": "Mappable column values"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Subitems"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 14,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 1050
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 9,
+                            "module": "google-maps:convertAnAddressIntoGeocode",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 421783
+                            },
+                            "filter": {
+                                "name": "",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{ifempty(2.mappable_column_values.mirror26; 2.mappable_column_values.mirror3)}}",
+                                            "o": "exist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "select": "address",
+                                "address": "{{ifempty(2.mappable_column_values.mirror26; 2.mappable_column_values.mirror3)}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 150,
+                                    "name": "Billing address"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "select": {
+                                            "label": "Address"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "google-maps"
+                                            },
+                                            "label": "My Google Maps connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:google-maps",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "select",
+                                        "type": "select",
+                                        "label": "Input Format Of Location",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "address",
+                                                "geo"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "address",
+                                        "type": "text",
+                                        "label": "Address",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 11,
+                            "module": "builtin:BasicFeeder",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "array": "{{9.address_components}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 150
+                                },
+                                "restore": {
+                                    "array": {
+                                        "mode": "edit"
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "mode": "edit",
+                                        "name": "array",
+                                        "spec": [],
+                                        "type": "array",
+                                        "label": "Array"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 18,
+                            "module": "builtin:BasicRouter",
+                            "version": 1,
+                            "mapper": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 150
+                                }
+                            },
+                            "routes": [
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 15,
+                                            "module": "util:SetVariables",
+                                            "version": 1,
+                                            "parameters": {},
+                                            "filter": {
+                                                "name": "",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{11.types[]}}",
+                                                            "b": "street_number",
+                                                            "o": "text:equal"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "scope": "roundtrip",
+                                                "variables": [
+                                                    {
+                                                        "name": "Street#",
+                                                        "value": "{{11.long_name}}"
+                                                    }
+                                                ]
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1800,
+                                                    "y": 0
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "scope": {
+                                                            "label": "One cycle"
+                                                        },
+                                                        "variables": {
+                                                            "items": [
+                                                                null
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "expect": [
+                                                    {
+                                                        "name": "variables",
+                                                        "spec": [
+                                                            {
+                                                                "name": "name",
+                                                                "type": "text",
+                                                                "label": "Variable name",
+                                                                "required": true
+                                                            },
+                                                            {
+                                                                "name": "value",
+                                                                "type": "any",
+                                                                "label": "Variable value"
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Variables"
+                                                    },
+                                                    {
+                                                        "name": "scope",
+                                                        "type": "select",
+                                                        "label": "Variable lifetime",
+                                                        "required": true,
+                                                        "validate": {
+                                                            "enum": [
+                                                                "roundtrip",
+                                                                "execution"
+                                                            ]
+                                                        }
+                                                    }
+                                                ],
+                                                "interface": [
+                                                    {
+                                                        "name": "Street#",
+                                                        "type": "any",
+                                                        "label": "Street#"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 17,
+                                            "module": "util:SetVariables",
+                                            "version": 1,
+                                            "parameters": {},
+                                            "filter": {
+                                                "name": "",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{11.types[]}}",
+                                                            "b": "route",
+                                                            "o": "text:equal"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "scope": "roundtrip",
+                                                "variables": [
+                                                    {
+                                                        "name": "Route",
+                                                        "value": "{{11.long_name}}"
+                                                    }
+                                                ]
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1800,
+                                                    "y": 300
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "scope": {
+                                                            "label": "One cycle"
+                                                        },
+                                                        "variables": {
+                                                            "items": [
+                                                                null
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "expect": [
+                                                    {
+                                                        "name": "variables",
+                                                        "spec": [
+                                                            {
+                                                                "name": "name",
+                                                                "type": "text",
+                                                                "label": "Variable name",
+                                                                "required": true
+                                                            },
+                                                            {
+                                                                "name": "value",
+                                                                "type": "any",
+                                                                "label": "Variable value"
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Variables"
+                                                    },
+                                                    {
+                                                        "name": "scope",
+                                                        "type": "select",
+                                                        "label": "Variable lifetime",
+                                                        "required": true,
+                                                        "validate": {
+                                                            "enum": [
+                                                                "roundtrip",
+                                                                "execution"
+                                                            ]
+                                                        }
+                                                    }
+                                                ],
+                                                "interface": [
+                                                    {
+                                                        "name": "Route",
+                                                        "type": "any",
+                                                        "label": "Route"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 19,
+                            "module": "util:GetVariables",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "variables": [
+                                    "Street#",
+                                    "Route"
+                                ]
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 750
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "variables": {
+                                            "items": [
+                                                null,
+                                                null
+                                            ]
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "variables",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "text",
+                                            "label": "Variable name",
+                                            "required": true
+                                        },
+                                        "type": "array",
+                                        "label": "Variables"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "Street#",
+                                        "type": "any",
+                                        "label": "Street#"
+                                    },
+                                    {
+                                        "name": "Route",
+                                        "type": "any",
+                                        "label": "Route"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 5,
+                            "module": "builtin:BasicRouter",
+                            "version": 1,
+                            "mapper": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 750
+                                }
+                            },
+                            "routes": [
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 3,
+                                            "module": "monday:CreateItem",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "filter": {
+                                                "name": "",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{2.mappable_column_values.connect_boards5.linkedPulseIds[].linkedPulseId}}",
+                                                            "o": "notexist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "name": "{{2.mappable_column_values.mirror_2}}-{{19.`Street#`}}{{space}}{{19.Route}}",
+                                                "boardId": "3465841015",
+                                                "groupId": "new_group",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "link_to_quotes",
+                                                        "columnValue": {
+                                                            "item_ids": "{{2.id}}"
+                                                        }
+                                                    },
+                                                    {
+                                                        "columnId": "connect_boards",
+                                                        "columnValue": {
+                                                            "item_ids": "{{2.mappable_column_values.connect_boards2.linkedPulseIds[].linkedPulseId}}"
+                                                        }
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 600
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Invoices  ::  private"
+                                                        },
+                                                        "groupId": {
+                                                            "mode": "chose",
+                                                            "label": "Pending Approval"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "link to Quotes"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "item_ids": {
+                                                                                "mode": "edit"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Contacts"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "item_ids": {
+                                                                                "mode": "edit"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "name",
+                                                        "type": "text",
+                                                        "label": "Item Name",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "groupId",
+                                                        "type": "select",
+                                                        "label": "Group ID"
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Array of column values to change"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 7,
+                                            "module": "builtin:BasicFeeder",
+                                            "version": 1,
+                                            "parameters": {},
+                                            "mapper": {
+                                                "array": "{{2.subitems}}"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1800,
+                                                    "y": 600
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "array": {
+                                                            "mode": "edit"
+                                                        }
+                                                    }
+                                                },
+                                                "expect": [
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "array",
+                                                        "spec": [],
+                                                        "type": "array",
+                                                        "label": "Array"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 8,
+                                            "module": "monday:createSubitem",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "mapper": {
+                                                "name": "{{7.name}}",
+                                                "itemId": "{{3.id}}",
+                                                "boardId": "3465841067",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "numbers",
+                                                        "columnValue": "{{7.mappable_column_values.numbers}}",
+                                                        "columnDataType": "numeric"
+                                                    },
+                                                    {
+                                                        "columnId": "numbers0",
+                                                        "columnValue": "{{7.mappable_column_values.numbers7}}",
+                                                        "columnDataType": "numeric"
+                                                    },
+                                                    {
+                                                        "columnId": "numbers9",
+                                                        "columnValue": "{{7.mappable_column_values.numbers70}}",
+                                                        "columnDataType": "numeric"
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2100,
+                                                    "y": 600
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Subitems of Invoices  ::  private"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnDataType": {
+                                                                        "mode": "chose",
+                                                                        "label": "Numeric"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnDataType": {
+                                                                        "mode": "chose",
+                                                                        "label": "Numeric"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "columnDataType": {
+                                                                        "mode": "chose",
+                                                                        "label": "Numeric"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "name",
+                                                        "type": "text",
+                                                        "label": "Subitem Name",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "text",
+                                                                "label": "Column ID",
+                                                                "required": true
+                                                            },
+                                                            {
+                                                                "name": "columnDataType",
+                                                                "type": "select",
+                                                                "label": "Column Type",
+                                                                "options": {
+                                                                    "store": [
+                                                                        {
+                                                                            "label": "Any Value",
+                                                                            "value": "any"
+                                                                        },
+                                                                        {
+                                                                            "label": "Text",
+                                                                            "value": "text"
+                                                                        },
+                                                                        {
+                                                                            "label": "Numeric",
+                                                                            "value": "numeric"
+                                                                        },
+                                                                        {
+                                                                            "label": "Date",
+                                                                            "value": "date"
+                                                                        },
+                                                                        {
+                                                                            "label": "Name",
+                                                                            "value": "name"
+                                                                        },
+                                                                        {
+                                                                            "label": "Boolean / Checkbox",
+                                                                            "value": "boolean"
+                                                                        },
+                                                                        {
+                                                                            "label": "Color / Status",
+                                                                            "value": "color"
+                                                                        },
+                                                                        {
+                                                                            "label": "Tag",
+                                                                            "value": "tag"
+                                                                        },
+                                                                        {
+                                                                            "label": "Email",
+                                                                            "value": "email"
+                                                                        },
+                                                                        {
+                                                                            "label": "Phone",
+                                                                            "value": "phone"
+                                                                        },
+                                                                        {
+                                                                            "label": "Team",
+                                                                            "value": "team"
+                                                                        },
+                                                                        {
+                                                                            "label": "Link",
+                                                                            "value": "link"
+                                                                        },
+                                                                        {
+                                                                            "label": "Dropdown",
+                                                                            "value": "dropdown"
+                                                                        },
+                                                                        {
+                                                                            "label": "Multiple Person",
+                                                                            "value": "multiple-person"
+                                                                        },
+                                                                        {
+                                                                            "label": "Timerange",
+                                                                            "value": "timerange"
+                                                                        },
+                                                                        {
+                                                                            "label": "Long Text",
+                                                                            "value": "long-text"
+                                                                        },
+                                                                        {
+                                                                            "label": "Timezone",
+                                                                            "value": "timezone"
+                                                                        },
+                                                                        {
+                                                                            "label": "Country",
+                                                                            "value": "country"
+                                                                        },
+                                                                        {
+                                                                            "label": "Location",
+                                                                            "value": "location"
+                                                                        },
+                                                                        {
+                                                                            "label": "Hour",
+                                                                            "value": "hour"
+                                                                        },
+                                                                        {
+                                                                            "label": "Week",
+                                                                            "value": "week"
+                                                                        },
+                                                                        {
+                                                                            "label": "Rating",
+                                                                            "value": "rating"
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Array of column values to change"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 4,
+                                            "module": "monday:ChangeMultipleColumnValues",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "filter": {
+                                                "name": "",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{2.mappable_column_values.connect_boards2.linkedPulseIds[].linkedPulseId}}",
+                                                            "o": "notexist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{2.id}}",
+                                                "boardId": "3465531891",
+                                                "columnValuesToChange": [
+                                                    {
+                                                        "columnId": "status1",
+                                                        "columnValue": {
+                                                            "label": "Error",
+                                                            "settings": "{\"done_colors\":[1],\"color_mapping\":{\"6\":12,\"12\":6},\"labels\":{\"0\":\"Needs Followup\",\"1\":\"Sent\",\"2\":\"Rejected\",\"3\":\"Needs Revision\",\"4\":\"Accepted\",\"5\":\"Not Sent\",\"6\":\"Error\",\"7\":\"Send\",\"8\":\"Viewed\"},\"labels_positions_v2\":{\"0\":3,\"1\":2,\"2\":6,\"3\":4,\"4\":5,\"5\":0,\"6\":7,\"7\":1,\"8\":8},\"labels_colors\":{\"0\":{\"color\":\"#fdab3d\",\"border\":\"#E99729\",\"var_name\":\"orange\"},\"1\":{\"color\":\"#00c875\",\"border\":\"#00B461\",\"var_name\":\"green-shadow\"},\"2\":{\"color\":\"#e2445c\",\"border\":\"#CE3048\",\"var_name\":\"red-shadow\"},\"3\":{\"color\":\"#0086c0\",\"border\":\"#3DB0DF\",\"var_name\":\"blue-links\"},\"4\":{\"color\":\"#a25ddc\",\"border\":\"#9238AF\",\"var_name\":\"purple\"},\"5\":{\"color\":\"#c4c4c4\",\"border\":\"#B0B0B0\",\"var_name\":\"grey\"},\"6\":{\"color\":\"#FF158A\",\"border\":\"#E01279\",\"var_name\":\"dark-pink\"},\"7\":{\"color\":\"#579bfc\",\"border\":\"#4387E8\",\"var_name\":\"bright-blue\"},\"8\":{\"color\":\"#CAB641\",\"border\":\"#C0AB31\",\"var_name\":\"mustered\"}}}",
+                                                            "selectType": "label2index"
+                                                        }
+                                                    }
+                                                ],
+                                                "create_labels_if_missing": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 900
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Quotes  ::  private"
+                                                        },
+                                                        "columnValuesToChange": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "columnId": {
+                                                                        "mode": "chose",
+                                                                        "label": "Quote Status"
+                                                                    },
+                                                                    "columnValue": {
+                                                                        "nested": {
+                                                                            "label": {
+                                                                                "mode": "chose",
+                                                                                "label": "Error"
+                                                                            },
+                                                                            "selectType": {
+                                                                                "mode": "chose",
+                                                                                "label": "Label"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "create_labels_if_missing",
+                                                        "type": "boolean",
+                                                        "label": "Create Labels if Missing",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "columnValuesToChange",
+                                                        "spec": [
+                                                            {
+                                                                "name": "columnId",
+                                                                "type": "select",
+                                                                "label": "Column ID",
+                                                                "dynamic": true,
+                                                                "options": {
+                                                                    "store": []
+                                                                },
+                                                                "required": true,
+                                                                "validate": false
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Column Values to Change",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 6,
+                                            "module": "monday:CreateUpdate",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "mapper": {
+                                                "body": "Contact does not exist.",
+                                                "itemId": "{{2.id}}"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1800,
+                                                    "y": 900
+                                                },
+                                                "restore": {
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "uinteger",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "body",
+                                                        "type": "text",
+                                                        "label": "Body",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 20,
+                            "module": "monday:GetItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 183282
+                            },
+                            "filter": {
+                                "name": "",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{2.mappable_column_values.connect_boards2.linkedPulseIds[].linkedPulseId}}",
+                                            "o": "exist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "id": "{{2.mappable_column_values.connect_boards2.linkedPulseIds[].linkedPulseId}}",
+                                "boardId": "2724672341",
+                                "showSubitems": true,
+                                "showParentItem": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 1650
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "boardId": {
+                                            "label": "Leads  ::  public"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "showParentItem",
+                                        "type": "boolean",
+                                        "label": "Show Parent Item",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "showSubitems",
+                                        "type": "boolean",
+                                        "label": "Show Subitems",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID (NOT MANDATORY)"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Name"
+                                    },
+                                    {
+                                        "name": "created_at",
+                                        "type": "date",
+                                        "label": "Created at"
+                                    },
+                                    {
+                                        "name": "updated_at",
+                                        "type": "date",
+                                        "label": "Updated at"
+                                    },
+                                    {
+                                        "name": "state",
+                                        "type": "text",
+                                        "label": "State"
+                                    },
+                                    {
+                                        "name": "board",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Board"
+                                    },
+                                    {
+                                        "name": "creator_id",
+                                        "type": "uinteger",
+                                        "label": "Creator ID"
+                                    },
+                                    {
+                                        "name": "group",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "text",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "title",
+                                                "type": "text",
+                                                "label": "Title"
+                                            },
+                                            {
+                                                "name": "deleted",
+                                                "type": "boolean",
+                                                "label": "Deleted"
+                                            },
+                                            {
+                                                "name": "archived",
+                                                "type": "boolean",
+                                                "label": "Archived"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Group"
+                                    },
+                                    {
+                                        "name": "column_values",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "text",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "title",
+                                                "type": "text",
+                                                "label": "Title"
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            },
+                                            {
+                                                "name": "additional_info",
+                                                "type": "text",
+                                                "label": "Additional Info"
+                                            },
+                                            {
+                                                "name": "text",
+                                                "type": "text",
+                                                "label": "Text"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Column Values"
+                                    },
+                                    {
+                                        "name": "mappable_column_values",
+                                        "spec": [
+                                            {
+                                                "name": "long_text1",
+                                                "spec": [
+                                                    {
+                                                        "name": "text",
+                                                        "type": "text",
+                                                        "label": "Text"
+                                                    },
+                                                    {
+                                                        "name": "changed_at",
+                                                        "type": "date",
+                                                        "label": "Changed at"
+                                                    },
+                                                    {
+                                                        "name": "additonal_info",
+                                                        "spec": [
+                                                            {
+                                                                "name": "label",
+                                                                "type": "text",
+                                                                "label": "Label"
+                                                            }
+                                                        ],
+                                                        "type": "collection",
+                                                        "label": "Aditional info"
+                                                    },
+                                                    {
+                                                        "name": "value",
+                                                        "type": "any",
+                                                        "label": "Value"
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "type": "text",
+                                                        "label": "Text"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Info for Quote"
+                                            },
+                                            {
+                                                "name": "people",
+                                                "spec": [
+                                                    {
+                                                        "name": "personsAndTeams",
+                                                        "spec": [
+                                                            {
+                                                                "name": "id",
+                                                                "type": "uinteger",
+                                                                "label": "ID"
+                                                            },
+                                                            {
+                                                                "name": "kind",
+                                                                "type": "text",
+                                                                "label": "Kind"
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Persons and Teams"
+                                                    },
+                                                    {
+                                                        "name": "changed_at",
+                                                        "type": "date",
+                                                        "label": "Changed at"
+                                                    },
+                                                    {
+                                                        "name": "additonal_info",
+                                                        "spec": [
+                                                            {
+                                                                "name": "label",
+                                                                "type": "text",
+                                                                "label": "Label"
+                                                            }
+                                                        ],
+                                                        "type": "collection",
+                                                        "label": "Aditional info"
+                                                    },
+                                                    {
+                                                        "name": "value",
+                                                        "type": "any",
+                                                        "label": "Value"
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "type": "text",
+                                                        "label": "Text"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Salesperson"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Mappable column values"
+                                    },
+                                    {
+                                        "name": "assets",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name"
+                                            },
+                                            {
+                                                "name": "public_url",
+                                                "type": "url",
+                                                "label": "Public URL"
+                                            },
+                                            {
+                                                "name": "url",
+                                                "type": "url",
+                                                "label": "URL"
+                                            },
+                                            {
+                                                "name": "file_extension",
+                                                "type": "text",
+                                                "label": "File Extension"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Assets"
+                                    },
+                                    {
+                                        "name": "parent_item",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name"
+                                            },
+                                            {
+                                                "name": "created_at",
+                                                "type": "date",
+                                                "label": "Created at"
+                                            },
+                                            {
+                                                "name": "updated_at",
+                                                "type": "date",
+                                                "label": "Updated at"
+                                            },
+                                            {
+                                                "name": "state",
+                                                "type": "text",
+                                                "label": "State"
+                                            },
+                                            {
+                                                "name": "board",
+                                                "spec": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "uinteger",
+                                                        "label": "ID"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Board"
+                                            },
+                                            {
+                                                "name": "creator_id",
+                                                "type": "uinteger",
+                                                "label": "Creator ID"
+                                            },
+                                            {
+                                                "name": "group",
+                                                "spec": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "text",
+                                                        "label": "ID"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Group"
+                                            },
+                                            {
+                                                "name": "column_values",
+                                                "spec": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "text",
+                                                        "label": "ID"
+                                                    },
+                                                    {
+                                                        "name": "title",
+                                                        "type": "text",
+                                                        "label": "Title"
+                                                    },
+                                                    {
+                                                        "name": "value",
+                                                        "type": "text",
+                                                        "label": "Value"
+                                                    },
+                                                    {
+                                                        "name": "additional_info",
+                                                        "type": "text",
+                                                        "label": "Additional Info"
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "type": "text",
+                                                        "label": "Text"
+                                                    }
+                                                ],
+                                                "type": "array",
+                                                "label": "Column Values"
+                                            },
+                                            {
+                                                "name": "mappable_column_values",
+                                                "spec": [],
+                                                "type": "collection",
+                                                "label": "Mappable column values"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Parent Item"
+                                    },
+                                    {
+                                        "name": "subitems",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name"
+                                            },
+                                            {
+                                                "name": "created_at",
+                                                "type": "date",
+                                                "label": "Created at"
+                                            },
+                                            {
+                                                "name": "updated_at",
+                                                "type": "date",
+                                                "label": "Updated at"
+                                            },
+                                            {
+                                                "name": "state",
+                                                "type": "text",
+                                                "label": "State"
+                                            },
+                                            {
+                                                "name": "board",
+                                                "spec": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "uinteger",
+                                                        "label": "ID"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Board"
+                                            },
+                                            {
+                                                "name": "creator_id",
+                                                "type": "uinteger",
+                                                "label": "Creator ID"
+                                            },
+                                            {
+                                                "name": "group",
+                                                "spec": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "text",
+                                                        "label": "ID"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Group"
+                                            },
+                                            {
+                                                "name": "column_values",
+                                                "spec": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "text",
+                                                        "label": "ID"
+                                                    },
+                                                    {
+                                                        "name": "title",
+                                                        "type": "text",
+                                                        "label": "Title"
+                                                    },
+                                                    {
+                                                        "name": "value",
+                                                        "type": "text",
+                                                        "label": "Value"
+                                                    },
+                                                    {
+                                                        "name": "additional_info",
+                                                        "type": "text",
+                                                        "label": "Additional Info"
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "type": "text",
+                                                        "label": "Text"
+                                                    }
+                                                ],
+                                                "type": "array",
+                                                "label": "Column Values"
+                                            },
+                                            {
+                                                "name": "mappable_column_values",
+                                                "spec": [],
+                                                "type": "collection",
+                                                "label": "Mappable column values"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Subitems"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 26,
+                            "module": "builtin:BasicRouter",
+                            "version": 1,
+                            "mapper": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 1650
+                                }
+                            },
+                            "routes": [
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 21,
+                                            "module": "monday:GetUser",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "filter": {
+                                                "name": "",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{20.mappable_column_values.people.personsAndTeams[].id}}",
+                                                            "o": "exist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "userId": "{{20.mappable_column_values.people.personsAndTeams[].id}}"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 1350
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "userId": {
+                                                            "mode": "edit"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "userId",
+                                                        "type": "select",
+                                                        "label": "User ID",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 22,
+                                            "module": "monday:CreateUpdate",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "filter": {
+                                                "name": "",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{21.id}}",
+                                                            "o": "exist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "body": "Hi <a class=\"user_mention_editor router\" href=\"{{21.url}}\" data-mention-type=\"User\" data-mention-id=\"{{21.id}}\" target=\"_blank\" rel=\"noopener noreferrer\">{{21.name}}</a>, ,{{20.name}} has accepted the quote.",
+                                                "itemId": "{{2.id}}"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1800,
+                                                    "y": 1350
+                                                },
+                                                "restore": {
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "itemId",
+                                                        "type": "uinteger",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "body",
+                                                        "type": "text",
+                                                        "label": "Body",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 23,
+                                            "module": "monday:ExecuteGraphQLQuery",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "filter": {
+                                                "name": "",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{22.id}}",
+                                                            "o": "exist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "method": "POST",
+                                                "queryBody": "mutation {\n    create_notification (user_id: {{21.id}}, target_id: {{22.id}}, text: \"Hi {{21.name}},{{20.name}} has accepted the quote.\", target_type: Post) {\n        text\n    }\n}",
+                                                "variables": [],
+                                                "operationName": "",
+                                                "variablesDataSource": "array"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2100,
+                                                    "y": 1350
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "method": {
+                                                            "label": "POST (queries and mutations)"
+                                                        },
+                                                        "variables": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "variablesDataSource": {
+                                                            "label": "Form"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "method",
+                                                        "type": "select",
+                                                        "label": "Method",
+                                                        "required": true,
+                                                        "validate": {
+                                                            "enum": [
+                                                                "GET",
+                                                                "POST"
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "queryBody",
+                                                        "type": "text",
+                                                        "label": "Query",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "operationName",
+                                                        "type": "text",
+                                                        "label": "Operation Name"
+                                                    },
+                                                    {
+                                                        "name": "variablesDataSource",
+                                                        "type": "select",
+                                                        "label": "Variables Data Source",
+                                                        "required": true,
+                                                        "validate": {
+                                                            "enum": [
+                                                                "array",
+                                                                "object"
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "variables",
+                                                        "spec": [
+                                                            {
+                                                                "name": "key",
+                                                                "type": "text",
+                                                                "label": "Key"
+                                                            },
+                                                            {
+                                                                "name": "value",
+                                                                "type": "text",
+                                                                "label": "Value"
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Variables"
+                                                    }
+                                                ]
+                                            },
+                                            "onerror": [
+                                                {
+                                                    "id": 25,
+                                                    "module": "builtin:Ignore",
+                                                    "version": 1,
+                                                    "metadata": {
+                                                        "designer": {
+                                                            "x": 2400,
+                                                            "y": 1500
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": 24,
+                                            "module": "google-email:ActionSendEmail",
+                                            "version": 2,
+                                            "parameters": {
+                                                "account": 630737
+                                            },
+                                            "mapper": {
+                                                "cc": [],
+                                                "to": [
+                                                    "{{21.email}}"
+                                                ],
+                                                "bcc": [],
+                                                "from": "",
+                                                "html": "Hi {{21.name}},{{20.name}} has accepted the quote.",
+                                                "subject": "Quote is accepted",
+                                                "attachments": []
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2400,
+                                                    "y": 1200
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "cc": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "to": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                null
+                                                            ]
+                                                        },
+                                                        "bcc": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "attachments": {
+                                                            "mode": "chose"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "account": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "google-restricted"
+                                                            },
+                                                            "label": "My Google Restricted connection (info@civicblinds.com)"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "account",
+                                                        "type": "account:google-restricted",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "from",
+                                                        "type": "text",
+                                                        "label": "From"
+                                                    },
+                                                    {
+                                                        "name": "to",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "type": "email",
+                                                            "label": "Email address",
+                                                            "required": true
+                                                        },
+                                                        "type": "array",
+                                                        "label": "To",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "subject",
+                                                        "type": "text",
+                                                        "label": "Subject"
+                                                    },
+                                                    {
+                                                        "name": "html",
+                                                        "type": "text",
+                                                        "label": "Content"
+                                                    },
+                                                    {
+                                                        "name": "attachments",
+                                                        "spec": [
+                                                            {
+                                                                "name": "fileName",
+                                                                "type": "filename",
+                                                                "label": "File name",
+                                                                "required": true,
+                                                                "semantic": "file:name"
+                                                            },
+                                                            {
+                                                                "name": "data",
+                                                                "type": "buffer",
+                                                                "label": "Data",
+                                                                "required": true,
+                                                                "semantic": "file:data"
+                                                            },
+                                                            {
+                                                                "name": "cid",
+                                                                "type": "text",
+                                                                "label": "Content-ID"
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Attachments"
+                                                    },
+                                                    {
+                                                        "name": "cc",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "type": "email",
+                                                            "label": "Email address"
+                                                        },
+                                                        "type": "array",
+                                                        "label": "Copy recipient"
+                                                    },
+                                                    {
+                                                        "name": "bcc",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "type": "email",
+                                                            "label": "Email address"
+                                                        },
+                                                        "type": "array",
+                                                        "label": "Blind copy recipient"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 27,
+                                            "module": "monday:MoveItemToGroup",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{20.id}}",
+                                                "boardId": "2724672341",
+                                                "groupId": "new_group13751"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 1800
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Leads  ::  public"
+                                                        },
+                                                        "groupId": {
+                                                            "mode": "chose",
+                                                            "label": "Sold"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "groupId",
+                                                        "type": "select",
+                                                        "label": "Group ID",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 28,
+                                            "module": "monday:MoveItemToGroup",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 183282
+                                            },
+                                            "mapper": {
+                                                "itemId": "{{2.mappable_column_values.connect_boards2.linkedPulseIds[].linkedPulseId}}",
+                                                "boardId": "2724672341",
+                                                "groupId": "new_group13751"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 2100
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "itemId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "boardId": {
+                                                            "mode": "chose",
+                                                            "label": "Leads  ::  public"
+                                                        },
+                                                        "groupId": {
+                                                            "mode": "chose",
+                                                            "label": "Sold"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "monday"
+                                                            },
+                                                            "label": "My Monday v2 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:monday",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "boardId",
+                                                        "type": "select",
+                                                        "label": "Board ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "itemId",
+                                                        "type": "select",
+                                                        "label": "Item ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "groupId",
+                                                        "type": "select",
+                                                        "label": "Group ID",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}

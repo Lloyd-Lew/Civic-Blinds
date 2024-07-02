@@ -1,0 +1,695 @@
+{
+    "name": "Integration Dropbox",
+    "flow": [
+        {
+            "id": 6,
+            "module": "monday:watchBoardColumnValues",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 996232
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 150
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "My Monday Board's Column Values webhook"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:monday3",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 23,
+            "module": "util:SetVariables",
+            "version": 1,
+            "parameters": {},
+            "filter": {
+                "name": "",
+                "conditions": [
+                    [
+                        {
+                            "a": "{{6.value.files}}",
+                            "o": "exist"
+                        }
+                    ]
+                ]
+            },
+            "mapper": {
+                "scope": "roundtrip",
+                "variables": [
+                    {
+                        "name": "varMonthFolderName",
+                        "value": "{{toString(formatDate(now; \"MMMM YYYY\"))}}"
+                    },
+                    {
+                        "name": "varNextMonthFolderName",
+                        "value": "{{toString(formatDate(addMonths(now; 1); \"MMMM YYYY\"))}}"
+                    },
+                    {
+                        "name": "varBooleanCreateNextMonthFolder",
+                        "value": "{{if(now >= addDays(setDate(addMonths(now; 1); 1); -27); true; false)}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 150
+                },
+                "restore": {
+                    "expect": {
+                        "scope": {
+                            "label": "One cycle"
+                        },
+                        "variables": {
+                            "items": [
+                                null,
+                                null,
+                                null
+                            ]
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "variables",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Variable name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "any",
+                                "label": "Variable value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Variables"
+                    },
+                    {
+                        "name": "scope",
+                        "type": "select",
+                        "label": "Variable lifetime",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "roundtrip",
+                                "execution"
+                            ]
+                        }
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "varMonthFolderName",
+                        "type": "any",
+                        "label": "varMonthFolderName"
+                    },
+                    {
+                        "name": "varNextMonthFolderName",
+                        "type": "any",
+                        "label": "varNextMonthFolderName"
+                    },
+                    {
+                        "name": "varBooleanCreateNextMonthFolder",
+                        "type": "any",
+                        "label": "varBooleanCreateNextMonthFolder"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 24,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 150
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 7,
+                            "module": "dropbox:searchFilesFolders",
+                            "version": 5,
+                            "parameters": {
+                                "__IMTCONN__": 1813995
+                            },
+                            "mapper": {
+                                "path": "/Orders",
+                                "limit": "2",
+                                "search": "{{23.varMonthFolderName}}",
+                                "file_status": "active",
+                                "file_categories": [
+                                    "folder"
+                                ]
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 0
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "path": {
+                                            "mode": "chose"
+                                        },
+                                        "file_status": {
+                                            "mode": "chose",
+                                            "label": "Active"
+                                        },
+                                        "file_categories": {
+                                            "mode": "chose"
+                                        },
+                                        "file_extensions": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "dropbox"
+                                            },
+                                            "label": "My Dropbox connection (mike@civicblinds.com)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:dropbox",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "search",
+                                        "type": "text",
+                                        "label": "Search",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "path",
+                                        "type": "folder",
+                                        "label": "Folder"
+                                    },
+                                    {
+                                        "name": "file_status",
+                                        "type": "select",
+                                        "label": "File Status",
+                                        "validate": {
+                                            "enum": [
+                                                "active",
+                                                "deleted"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "limit",
+                                        "type": "uinteger",
+                                        "label": "Limit"
+                                    },
+                                    {
+                                        "name": "file_categories",
+                                        "type": "select",
+                                        "label": "File Categories",
+                                        "multiple": true,
+                                        "validate": {
+                                            "enum": [
+                                                "image",
+                                                "document",
+                                                "pdf",
+                                                "spreadsheet",
+                                                "presentation",
+                                                "audio",
+                                                "video",
+                                                "folder",
+                                                "paper",
+                                                "others"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "file_extensions",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "text"
+                                        },
+                                        "type": "array",
+                                        "label": "File Extensions"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 14,
+                            "module": "builtin:BasicFeeder",
+                            "version": 1,
+                            "parameters": {},
+                            "filter": {
+                                "name": "",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{7.`__IMTLENGTH__`}}",
+                                            "b": "0",
+                                            "o": "number:greater"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "array": "{{6.value.files}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 0
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "array": {
+                                            "mode": "edit"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "mode": "edit",
+                                        "name": "array",
+                                        "spec": [],
+                                        "type": "array",
+                                        "label": "Array"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 13,
+                            "module": "monday:downloadFile",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 2156737
+                            },
+                            "filter": {
+                                "name": "",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{map(6.previousValue.files; \"assetId\")}}",
+                                            "b": "{{14.assetId}}",
+                                            "o": "text:notcontain"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "assetId": "{{14.assetId}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 0
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection New"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "assetId",
+                                        "type": "uinteger",
+                                        "label": "Asset ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "assetId",
+                                        "type": "uinteger",
+                                        "label": "Asset ID",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 4,
+                            "module": "dropbox:uploadLargeFile",
+                            "version": 5,
+                            "parameters": {
+                                "__IMTCONN__": 1813995
+                            },
+                            "mapper": {
+                                "data": "{{13.data}}",
+                                "path": "/Orders/{{23.varMonthFolderName}}",
+                                "filename": "{{13.fileName}}",
+                                "overwrite": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1800,
+                                    "y": 0
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "path": {
+                                            "mode": "edit"
+                                        },
+                                        "overwrite": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "dropbox"
+                                            },
+                                            "label": "My Dropbox connection (mike@civicblinds.com)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:dropbox",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "path",
+                                        "type": "folder",
+                                        "label": "Folder",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "filename",
+                                        "type": "filename",
+                                        "label": "File Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "data",
+                                        "type": "buffer",
+                                        "label": "Data",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "overwrite",
+                                        "type": "boolean",
+                                        "label": "Overwrite an existing file",
+                                        "required": true
+                                    }
+                                ],
+                                "advanced": true
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 25,
+                            "module": "dropbox:searchFilesFolders",
+                            "version": 5,
+                            "parameters": {
+                                "__IMTCONN__": 1813995
+                            },
+                            "filter": {
+                                "name": "",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{23.varBooleanCreateNextMonthFolder}}",
+                                            "b": "{{true}}",
+                                            "o": "boolean:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "path": "/Orders",
+                                "limit": "2",
+                                "search": "{{23.varNextMonthFolderName}}",
+                                "file_status": "active",
+                                "file_categories": [
+                                    "folder"
+                                ]
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 300
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "path": {
+                                            "mode": "chose"
+                                        },
+                                        "file_status": {
+                                            "mode": "chose",
+                                            "label": "Active"
+                                        },
+                                        "file_categories": {
+                                            "mode": "chose"
+                                        },
+                                        "file_extensions": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "dropbox"
+                                            },
+                                            "label": "My Dropbox connection (mike@civicblinds.com)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:dropbox",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "search",
+                                        "type": "text",
+                                        "label": "Search",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "path",
+                                        "type": "folder",
+                                        "label": "Folder"
+                                    },
+                                    {
+                                        "name": "file_status",
+                                        "type": "select",
+                                        "label": "File Status",
+                                        "validate": {
+                                            "enum": [
+                                                "active",
+                                                "deleted"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "limit",
+                                        "type": "uinteger",
+                                        "label": "Limit"
+                                    },
+                                    {
+                                        "name": "file_categories",
+                                        "type": "select",
+                                        "label": "File Categories",
+                                        "multiple": true,
+                                        "validate": {
+                                            "enum": [
+                                                "image",
+                                                "document",
+                                                "pdf",
+                                                "spreadsheet",
+                                                "presentation",
+                                                "audio",
+                                                "video",
+                                                "folder",
+                                                "paper",
+                                                "others"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "file_extensions",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "text"
+                                        },
+                                        "type": "array",
+                                        "label": "File Extensions"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 5,
+                            "module": "dropbox:createFolder",
+                            "version": 5,
+                            "parameters": {
+                                "__IMTCONN__": 1813995
+                            },
+                            "filter": {
+                                "name": "",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{25.`__IMTLENGTH__`}}",
+                                            "b": "0",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "name": "{{23.varNextMonthFolderName}}",
+                                "path": "/Orders",
+                                "autorename": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 300
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "path": {
+                                            "mode": "chose"
+                                        },
+                                        "autorename": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "dropbox"
+                                            },
+                                            "label": "My Dropbox connection (mike@civicblinds.com)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:dropbox",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Folder Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "path",
+                                        "type": "folder",
+                                        "label": "Folder"
+                                    },
+                                    {
+                                        "name": "autorename",
+                                        "type": "boolean",
+                                        "label": "Auto rename",
+                                        "required": true
+                                    }
+                                ],
+                                "advanced": true
+                            },
+                            "onerror": [
+                                {
+                                    "id": 26,
+                                    "module": "builtin:Ignore",
+                                    "version": 1,
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 1500,
+                                            "y": 300
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}
